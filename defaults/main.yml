@@ -1,0 +1,85 @@
+wait: true
+wait_timeout: 3600
+base_cluster:
+  conf: ['cluster-env', 'global', 'hadoop-env']
+services:
+  - name: HDFS
+    conf: ['core-site', 'hdfs-site', 'hdfs-log4j']
+    components:
+      noha: ['NAMENODE', 'SECONDARY_NAMENODE', 'DATANODE']
+      ha: ['NAMENODE', 'ZKFC', 'DATANODE', 'JOURNALNODE']
+      client: ['HDFS_CLIENT']
+    custom:
+      noha: ['first_namenode', 'second_namenode', 'zookeeper_quorum', 'hdp_datanode_dir', 'hdp_namenode_dir', 'hdp_checkpoint_dir']
+      ha: ['']
+      ssl: ['']
+  - name: YARN
+    conf: ['yarn-site', 'yarn-env', 'capacity-scheduler']
+    components:
+      noha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
+      ha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
+      client: ['YARN_CLIENT']
+    custom:
+      noha: ['zookeeper_quorum', 'hdp_yarn_local_dir', 'hdp_yarn_log_dir']
+      ha: ['']
+      ssl: ['']
+  - name: MAPREDUCE2
+    conf: ['mapred-site', 'mapred-env', 'mapred-queue-acls']
+    components:
+      noha: ['HISTORYSERVER']
+      ha: ['']
+      client: ['MAPREDUCE2_CLIENT']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
+  - name: TEZ
+    conf: ['tez-env', 'tez-site']
+    components:
+      noha: ['']
+      ha: ['']
+      client: ['TEZ_CLIENT']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
+  - name: PIG
+    conf: ['pig-properties', 'pig-env', 'pig-log4j']
+    components:
+      noha: ['']
+      ha: ['']
+      client: ['PIG']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
+  - name: SLIDER
+    conf: ['slider-env', 'slider-log4j']
+    components:
+      noha: ['']
+      ha: ['']
+      client: ['SLIDER']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
+  - name: ZOOKEEPER
+    conf: ['zoo.cfg', 'zookeeper-env']
+    components:
+      noha: ['ZOOKEEPER_SERVER']
+      ha: ['']
+      client: ['ZOOKEEPER_CLIENT']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
+  - name: HIVE
+    conf: ['hive-site', 'hive-env', 'hcat-env', 'hivemetastore-site', 'hiveserver2-site', 'webhcat-site', 'webhcat-env']
+    components:
+      noha: ['HIVE_SERVER', 'HIVE_METASTORE', 'WEBHCAT_SERVER']
+      ha: ['HIVE_SERVER', 'HIVE_METASTORE', 'WEBHCAT_SERVER']
+      client: ['HIVE_CLIENT', 'HCAT']
+    custom:
+      noha: ['database_type', 'database_server', 'database_hive_user', 'database_hive_user_password']
+      ha: ['']
+      ssl: ['']

@@ -1,0 +1,34 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "core-site",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": {
+				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"fs.defaultFS": "hdfs://{{ cluster_name }}",{% else %}"fs.defaultFS": "hdfs://{{ first_namenode }}:8020",{% endif %}
+				"fs.trash.interval": "360",
+				"ha.failover-controller.active-standby-elector.zk.op.retries": "120",
+				"ha.zookeeper.quorum": "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}",
+				"hadoop.http.authentication.simple.anonymous.allowed": "true",
+				"hadoop.proxyuser.hcat.groups": "*",
+				"hadoop.proxyuser.hcat.hosts": "*",
+				"hadoop.proxyuser.httpfs.groups": "*",
+				"hadoop.proxyuser.httpfs.hosts": "*",
+				"hadoop.proxyuser.hue.groups": "*",
+				"hadoop.proxyuser.hue.hosts": "*",
+				"hadoop.security.auth_to_local": "DEFAULT",
+				"hadoop.security.authentication": "simple",
+				"hadoop.security.authorization": "false",
+				"hadoop.security.key.provider.path": "",
+				"io.compression.codecs": "org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.SnappyCodec",
+				"io.file.buffer.size": "131072",
+				"io.serializations": "org.apache.hadoop.io.serializer.WritableSerialization",
+				"ipc.client.connect.max.retries": "50",
+				"ipc.client.connection.maxidletime": "30000",
+				"ipc.client.idlethreshold": "8000",
+				"ipc.server.tcpnodelay": "true",
+				"mapreduce.jobtracker.webinterface.trusted": "false",
+				"net.topology.script.file.name": "/etc/hadoop/conf/topology_script.py"
+			}
+		}
+	}
+}

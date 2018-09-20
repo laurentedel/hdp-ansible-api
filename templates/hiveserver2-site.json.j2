@@ -1,0 +1,17 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "hiveserver2-site",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": {
+        "hive.conf.restricted.list" : "hive.security.authenticator.manager,hive.security.authorization.manager,hive.users.in.admin.role",
+        "hive.metastore.metrics.enabled" : "true",
+        "hive.security.authenticator.manager" : "org.apache.hadoop.hive.ql.security.SessionStateUserAuthenticator",
+        "hive.security.authorization.enabled" : "false",
+        "hive.security.authorization.manager" : "org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory",
+        "hive.service.metrics.hadoop2.component" : "hiveserver2",
+        "hive.service.metrics.reporter" : "HADOOP2"
+			}
+		}
+	}
+}

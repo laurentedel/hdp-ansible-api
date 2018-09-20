@@ -1,0 +1,12 @@
+{"Clusters":{"desired_configs":{"type":"zoo.cfg","tag":"{{ range(00000000, 99999999) | random }}","properties":{ {% raw %}
+  "autopurge.purgeInterval" : "24",
+  "autopurge.snapRetainCount" : "30",
+  "clientPort" : "2181",
+  "dataDir" : "/usr/hdp/zookeeper",
+  "initLimit" : "10",
+  "syncLimit" : "5",
+  "tickTime" : "3000"
+}
+}
+}
+}{% endraw %}
