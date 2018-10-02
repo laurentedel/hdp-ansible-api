@@ -19,7 +19,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: create_cluster
   no_log: False
   ignore_errors: True
@@ -57,7 +57,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: register_vdf
   no_log: True
   ignore_errors: True
@@ -79,7 +79,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: cluster_definition
   no_log: False
   with_items:
@@ -102,7 +102,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   with_items:
    - "{{ base_cluster.conf }}"
 
@@ -118,7 +118,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
 
 - name: Load configuration for differents services
   uri:
@@ -132,7 +132,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   with_subelements:
     - "{{ services }}"
     - conf
@@ -149,7 +149,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   with_subelements:
     - "{{ services }}"
     - conf
@@ -170,7 +170,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: register_components_ha
   with_subelements:
     - "{{ services }}"
@@ -191,7 +191,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: register_components_noha
   with_subelements:
     - "{{ services }}"
@@ -212,7 +212,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: register_components_clients
   with_subelements:
     - "{{ services }}"
@@ -233,7 +233,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: register_hosts
   with_items:
     - "{{ cluster_hosts }}"
@@ -258,7 +258,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: check_install_all_services
 
 - debug:
@@ -284,6 +284,12 @@
   delay: 10
   when: wait and check_install_all_services is defined and check_install_all_services.json is defined and check_install_all_services and (check_install_all_services.json) != ""
 
+- name: Check ranger permissions
+  file:
+    path: /etc/ranger/admin/.rangeradmin.jceks.crc
+    owner: ranger
+    group: ranger
+
 - name: Start all services
   uri:
     url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}/services?ServiceInfo/state=INSTALLED"
@@ -296,7 +302,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: check_start_all_services
 
 - name: Wait for all services to be started
@@ -310,7 +316,7 @@
     body_format: json
     status_code: 200,201,202
     validate_certs: no
-  return_content: yes
+    return_content: yes
   register: cluster_check_task_start_services
   until: (cluster_check_task_start_services.json.Requests.request_status == 'COMPLETED' and (cluster_check_task_start_services.json.Requests.completed_task_count|int > 0) or
           cluster_check_task_start_services.json.Requests.request_status == 'FAILED' or

@@ -4,11 +4,16 @@
 			"type": "ranger-{{ in_services|lower }}-policymgr-ssl",
 			"tag": "{{ range(00000000, 99999999) | random }}",
 			"properties": {
-        "xasecure.policymgr.clientssl.keystore" : "/usr/hdp/current/hadoop-client/conf/ranger-yarn-plugin-keystore.jks",{% raw %}
-        "xasecure.policymgr.clientssl.keystore.credential.file" : "jceks://file{{credential_file}}",{% endraw %}
+			{%if cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" %}
+        "xasecure.policymgr.clientssl.keystore" : "/usr/hdp/current/hadoop-client/conf/ranger-plugin-keystore.jks",
+        "xasecure.policymgr.clientssl.truststore" : "/usr/hdp/current/hadoop-client/conf/ranger-plugin-truststore.jks",
+			{% else %}
+        "xasecure.policymgr.clientssl.keystore" : "/usr/hdp/current/{{ in_services|lower }}-client/conf/ranger-plugin-keystore.jks",
+        "xasecure.policymgr.clientssl.truststore" : "/usr/hdp/current/{{ in_services|lower }}-client/conf/ranger-plugin-truststore.jks",
+			{% endif %}
+        "xasecure.policymgr.clientssl.keystore.credential.file" : {% raw %}"jceks://file{{credential_file}}",{% endraw %}
         "xasecure.policymgr.clientssl.keystore.password" : "changeit",
-        "xasecure.policymgr.clientssl.truststore" : "/usr/hdp/current/hadoop-client/conf/ranger-yarn-plugin-truststore.jks",{% raw %}
-        "xasecure.policymgr.clientssl.truststore.credential.file" : "jceks://file{{credential_file}}",{% endraw %}
+        "xasecure.policymgr.clientssl.truststore.credential.file" : {% raw %}"jceks://file{{credential_file}}",{% endraw %}
         "xasecure.policymgr.clientssl.truststore.password" : "changeit"
       }
     }
