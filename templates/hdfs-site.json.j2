@@ -7,7 +7,7 @@
 				"dfs.block.access.token.enable": "true",
 				"dfs.blockreport.initialDelay": "120",
 				"dfs.blocksize": "134217728",
-			  {% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.client.failover.proxy.provider.{{ cluster_name }}": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",{% endif %}
+			  {% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}"dfs.client.failover.proxy.provider.{{ cluster_name }}": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",{% endif %}
 				"dfs.client.read.shortcircuit": "true",
 				"dfs.client.read.shortcircuit.streams.cache.size": "4096",
 				"dfs.client.retry.policy.enabled": "false",
@@ -26,7 +26,7 @@
 				"dfs.domain.socket.path": "/var/lib/hadoop-hdfs/dn_socket",
 				"dfs.encrypt.data.transfer.cipher.suites": "AES/CTR/NoPadding",
 				"dfs.encryption.key.provider.uri": "",
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.ha.automatic-failover.enabled": "true",
+				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}"dfs.ha.automatic-failover.enabled": "true",
 	      "dfs.ha.fencing.methods": "shell(/bin/true)",
 	      "dfs.ha.namenodes.{{ cluster_name }}": "nn1,nn2",{% endif %}
 				"dfs.heartbeat.interval": "3",
@@ -44,21 +44,22 @@
 				"dfs.namenode.datanode.registration.ip-hostname-check": "false",
 				"dfs.namenode.fslock.fair": "false",
 				"dfs.namenode.handler.count": "100",
-				{% if cluster_services.HDFS.HA is not defined %}"dfs.namenode.http-address": "{{ first_namenode }}:50070",{% endif %}
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.namenode.http-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:50070",
-	      "dfs.namenode.http-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:50070",{% endif %}
-				{% if cluster_services.HDFS.HA is not defined %}"dfs.namenode.https-address": "{{ first_namenode }}:50470",{% endif %}
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.namenode.https-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:50470",
-	      "dfs.namenode.https-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:50470",{% endif %}
-				"dfs.namenode.name.dir": "{% for dir in hdp_namenode_dir %}{{ dir }}{% if not loop.last %},{% endif %}{% endfor %}",
 				"dfs.namenode.name.dir.restore": "true",
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.namenode.rpc-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:8020",
-	      "dfs.namenode.rpc-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:8020",{% else %}"dfs.namenode.rpc-address": "{{ first_namenode }}:8020",{% endif %}
 				"dfs.namenode.safemode.threshold-pct": "0.999",
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == False %}"dfs.namenode.secondary.http-address": "{{ second_namenode }}:50090",{% endif %}
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.namenode.shared.edits.dir": "qjournal://{% for journalnode in groups['JOURNALNODE'] %}{{ journalnode }}:8485{% if not loop.last %};{% endif %}{% endfor %}/{{ cluster_name }}",{% endif %}
-				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}"dfs.nameservices": "{{ cluster_name }}",
-				"dfs.journalnode.edits.dir": "{% for dir in hdp_journalnode_dir %}{{ dir }}{% if not loop.last %},{% endif %}{% endfor %}",{% endif %}
+				"dfs.namenode.name.dir": "{% for dir in hdp_namenode_dir %}{{ dir }}{% if not loop.last %},{% endif %}{% endfor %}",
+				{% if cluster_services.HDFS.HA is not defined %}"dfs.namenode.http-address": "{{ first_namenode }}:50070",{% endif %}
+				{% if cluster_services.HDFS.HA is not defined %}"dfs.namenode.https-address": "{{ first_namenode }}:50470",{% endif %}
+				{% if cluster_services.HDFS.HA is defined and not cluster_services.HDFS.HA %}"dfs.namenode.secondary.http-address": "{{ second_namenode }}:50090",
+				"dfs.namenode.rpc-address": "{{ first_namenode }}:8020",{% endif %}
+				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}"dfs.namenode.http-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:50070",
+	      "dfs.namenode.http-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:50070",
+				"dfs.namenode.https-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:50470",
+	      "dfs.namenode.https-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:50470",
+				"dfs.namenode.rpc-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:8020",
+	      "dfs.namenode.rpc-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:8020",
+				"dfs.journalnode.edits.dir": "{% for dir in hdp_journalnode_dir %}{{ dir }}{% if not loop.last %},{% endif %}{% endfor %}",
+				"dfs.namenode.shared.edits.dir": "qjournal://{% for journalnode in groups['JOURNALNODE'] %}{{ journalnode }}:8485{% if not loop.last %};{% endif %}{% endfor %}/{{ cluster_name }}",
+				"dfs.nameservices": "{{ cluster_name }}",{% endif %}
 				"dfs.namenode.stale.datanode.interval": "30000",
 				"dfs.namenode.startup.delay.block.deletion.sec": "3600",
 				"dfs.namenode.write.stale.datanode.ratio": "1.0f",

@@ -1,12 +1,12 @@
-
-# - name: Copy VDF repository
-#   template: >
-#    src=roles/ambari-cluster/templates/yarn-site.json.j2
-#    dest=/tmp/yarn-site.json
-#   # with_subelements:
-#   #   - "{{ services }}"
-#   #   - conf
 #
+# # - name: Copy VDF repository
+# #   template: >
+# #    src=roles/ambari-cluster/templates/define_cluster.json.j2
+# #    dest=/tmp/define_cluster.json
+# #   # with_subelements:
+# #   #   - "{{ services }}"
+# #   #   - conf
+# # #
 - name: Create empty cluster
   uri:
     url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}"
@@ -74,18 +74,21 @@
     user: "{{ ambari_username }}"
     password: "{{ ambari_password }}"
     headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
-    body: "{{ lookup('template','templates/define_cluster.json.j2') }}"
+    # body: "{{ lookup('template','templates/define_cluster.json.j2') }}"
+    body: '{"ServiceInfo":{"service_name":"{{ item.name|upper }}","desired_repository_version_id": 1}}'
     body_format: json
     validate_certs: no
     status_code: 200,201,202
   return_content: yes
   register: cluster_definition
-  no_log: True
-  ignore_errors: True
+  no_log: False
+  with_items:
+    - "{{ services }}"
+  failed_when: cluster_definition.status not in [409, 200, 201, 202]
 
-- name: Cluster services already exists
-  pause: prompt='Please confirm you want to continue, services already exists on cluster {{ cluster_name }} ! Press return to continue. Press Ctrl+c and then "a" to abort'
-  when: cluster_definition.status == 409
+# - name: Cluster services already exists
+#   pause: prompt='Please confirm you want to continue, services already exists on cluster {{ cluster_name }} ! Press return to continue. Press Ctrl+c and then "a" to abort'
+#   when: cluster_definition.status == 409
 
 - name: Load default configuration
   uri:
@@ -134,6 +137,27 @@
     - "{{ services }}"
     - conf
 
+- name: Load configuration for differents services
+  uri:
+    url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}"
+    method: PUT
+    force_basic_auth: yes
+    user: "{{ ambari_username }}"
+    password: "{{ ambari_password }}"
+    headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
+    body: "{{ lookup('template','templates/{{ item.1 }}.json.j2') }}"
+    body_format: json
+    validate_certs: no
+    status_code: 200,201,202
+  return_content: yes
+  with_subelements:
+    - "{{ services }}"
+    - conf
+
+- include: register_ranger_plugins.yml in_services={{ item }}
+  with_items: "{{ cluster_services.RANGER.PLUGIN }}"
+  when: cluster_services.RANGER.PLUGIN[in_services]
+
 - name: Register HA components
   uri:
     url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}/services?ServiceInfo/service_name={{ item.0.name }}"
@@ -147,11 +171,13 @@
     validate_certs: no
     status_code: 200,201,202
   return_content: yes
+  register: register_components_ha
   with_subelements:
     - "{{ services }}"
     - components.ha
   when: cluster_services[item.0.name].HA is defined and cluster_services[item.0.name].HA == True and item.1 != ""
-  ignore_errors: True
+  failed_when: register_components_ha.status not in [409, 200, 201, 202]
+  # ignore_errors: True
 
 - name: Register components
   uri:
@@ -166,11 +192,13 @@
     validate_certs: no
     status_code: 200,201,202
   return_content: yes
+  register: register_components_noha
   with_subelements:
     - "{{ services }}"
     - components.noha
   when: cluster_services[item.0.name] is defined and cluster_services[item.0.name].HA is not defined and item.1 != ""
-  ignore_errors: True
+  failed_when: register_components_noha.status not in [409, 200, 201, 202]
+  # ignore_errors: True
 
 - name: Register clients components
   uri:
@@ -185,10 +213,12 @@
     validate_certs: no
     status_code: 200,201,202
   return_content: yes
+  register: register_components_clients
   with_subelements:
     - "{{ services }}"
     - components.client
-  when: cluster_services[item.0.name] is defined and cluster_services[item.0.name].HA is not defined and item.1 != ""
+  when: cluster_services[item.0.name] is defined and item.1 != ""
+  failed_when: register_components_clients.status not in [409, 200, 201, 202]
   ignore_errors: True
 
 - name: Register hosts
@@ -204,9 +234,11 @@
     validate_certs: no
     status_code: 200,201,202
   return_content: yes
+  register: register_hosts
   with_items:
     - "{{ cluster_hosts }}"
-  ignore_errors: True
+  failed_when: register_hosts.status not in [409, 200, 201, 202]
+  # ignore_errors: True
 
 - include: register_components.yml hosts={{ item }}
   with_items: "{{ cluster_hosts }}"
@@ -287,6 +319,6 @@
   retries: "{{ wait_timeout // 10 }}"
   delay: 10
   when: wait and check_start_all_services is defined and check_start_all_services and (check_start_all_services.json) != ""
-
-- debug:
-    var: cluster_check_task_start_services
+#
+# - debug:
+#     var: cluster_check_task_start_services

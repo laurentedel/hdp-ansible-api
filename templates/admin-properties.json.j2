@@ -1,0 +1,19 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "admin-properties",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": {
+					"DB_FLAVOR": {% if database_type == "mysql" %}"MYSQL"{% elif database_type == "postgresql" %}"POSTGRES"{% endif %},
+					"SQL_CONNECTOR_JAR": {% if database_type == "mysql" %}"/usr/share/java/mysql-connector-java.jar"{% elif database_type == "postgresql" %}"/usr/share/java/postgresql.jar"{% endif %},
+					"db_host": "{{ database_server }}",
+					"db_name": "{{ database_ranger }}",
+					"db_user": "{{ database_ranger_user }}",
+					"db_password": "{{ database_ranger_user_password }}",
+	        "db_root_password" : "",
+	        "db_root_user" : "",
+					"policymgr_external_url": "http://{{ groups['RANGER_ADMIN'][0] }}:6080"
+			}
+		}
+	}
+}

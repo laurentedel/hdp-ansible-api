@@ -1,0 +1,12 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "ranger-{{ in_services|lower }}-security",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": {
+        "ranger.plugin.{{ in_services|lower }}.policy.rest.url" : "http://{{ groups['RANGER_ADMIN'][0] }}:6080",
+        "ranger.plugin.{{ in_services|lower }}.policy.pollIntervalMs" : "30000"
+      }
+    }
+		}
+		}

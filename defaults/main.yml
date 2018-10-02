@@ -83,3 +83,13 @@ services:
       noha: ['database_type', 'database_server', 'database_hive_user', 'database_hive_user_password']
       ha: ['']
       ssl: ['']
+  - name: RANGER
+    conf: ['ranger-admin-site', 'ranger-env', 'admin-properties', 'admin-log4j', 'ranger-ugsync-site', 'usersync-properties', 'usersync-log4j']
+    components:
+      noha: ['RANGER_ADMIN', 'RANGER_USERSYNC']
+      ha: ['']
+      client: ['']
+    custom:
+      noha: ['database_type', 'database_server', 'database_ranger_user', 'database_ranger_user_password']
+      ha: ['']
+      ssl: ['']

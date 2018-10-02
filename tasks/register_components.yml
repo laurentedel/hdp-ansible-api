@@ -18,9 +18,10 @@
   loop_control:
     label: in_item.1
     loop_var: in_item
-  when: in_item.1 != "" and hosts in groups[in_item.1]
-  ignore_errors: True
-  no_log: True
+  when: in_item.1 != "" and hosts in groups[in_item.1] and cluster_services[in_item.0.name].HA is not defined
+  failed_when: registration.status not in [200, 201, 202, 409]
+  # ignore_errors: True
+  # no_log: True
 
 - fail:
     msg: "{{ fail_item.status }}: Components {{ fail_item.in_item[1] }} already registred on the hosts"
@@ -30,7 +31,8 @@
     loop_var: fail_item
     label: "{{ fail_item.in_item[1] }} on {{ hosts }}"
   when: fail_item.status is defined and fail_item.status == 409
-  ignore_errors: True
+  failed_when: fail_item.status not in [200, 201, 202, 409]
+  # ignore_errors: True
 
 - name: Register HA components on hosts
   uri:
@@ -52,9 +54,10 @@
   loop_control:
     label: in_item.1
     loop_var: in_item
-  when: in_item.1 != "" and hosts in groups[in_item.1]
-  ignore_errors: True
-  no_log: True
+  when: in_item.1 != "" and hosts in groups[in_item.1] and cluster_services[in_item.0.name].HA is defined and cluster_services[in_item.0.name].HA == True
+  failed_when: registration.status not in [200, 201, 202, 409]
+  # ignore_errors: True
+  # no_log: True
 
 - fail:
     msg: "{{ fail_item.status }}: Components {{ fail_item.in_item[1] }} already registred on the hosts"
@@ -64,7 +67,8 @@
     loop_var: fail_item
     label: "{{ fail_item.in_item[1] }} on {{ hosts }}"
   when: fail_item.status is defined and fail_item.status == 409
-  ignore_errors: True
+  failed_when: fail_item.status not in [200, 201, 202, 409]
+  # ignore_errors: True
 
 - name: Register clients components on hosts
   uri:
@@ -87,8 +91,9 @@
     label: in_item.1
     loop_var: in_item
   when: in_item.1 != "" and hosts in groups[in_item.1]
-  ignore_errors: True
-  no_log: True
+  failed_when: registration.status not in [200, 201, 202, 409]
+  # ignore_errors: True
+  # no_log: True
 
 - fail:
     msg: "{{ fail_item.status }}: Components {{ fail_item.in_item[1] }} already registred on the hosts"
@@ -98,4 +103,5 @@
     loop_var: fail_item
     label: "{{ fail_item.in_item[1] }} on {{ hosts }}"
   when: fail_item.status is defined and fail_item.status == 409
-  ignore_errors: True
+  failed_when: fail_item.status not in [200, 201, 202, 409]
+  # ignore_errors: True
