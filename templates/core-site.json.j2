@@ -23,6 +23,13 @@
 				"io.compression.codecs": "org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.SnappyCodec",
 				"io.file.buffer.size": "131072",
 				"io.serializations": "org.apache.hadoop.io.serializer.WritableSerialization",
+				{% if cluster_services.HDFS.SSL is defined and cluster_services.HDFS.SSL %}
+				"hadoop.rpc.protection" : "authentication",
+				"hadoop.ssl.require.client.cert" : "false",
+				"hadoop.ssl.hostname.verifier" : "DEFAULT",
+				"hadoop.ssl.keystores.factory.class" : "org.apache.hadoop.security.ssl.FileBasedKeyStoresFactory",
+				"hadoop.ssl.server.conf" : "ssl-server.xml",
+				"hadoop.ssl.client.conf" : "ssl-client.xml",{% endif %}
 				"ipc.client.connect.max.retries": "50",
 				"ipc.client.connection.maxidletime": "30000",
 				"ipc.client.idlethreshold": "8000",

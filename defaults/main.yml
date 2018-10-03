@@ -4,7 +4,7 @@ base_cluster:
   conf: ['cluster-env', 'global', 'hadoop-env']
 services:
   - name: HDFS
-    conf: ['core-site', 'hdfs-site', 'hdfs-log4j']
+    conf: ['core-site', 'hdfs-site', 'hdfs-log4j', 'ssl-client', 'ssl-server']
     components:
       noha: ['NAMENODE', 'SECONDARY_NAMENODE', 'DATANODE']
       ha: ['NAMENODE', 'ZKFC', 'DATANODE', 'JOURNALNODE']
@@ -14,7 +14,7 @@ services:
       ha: ['']
       ssl: ['']
   - name: YARN
-    conf: ['yarn-site', 'yarn-env', 'capacity-scheduler']
+    conf: ['yarn-site', 'yarn-env', 'capacity-scheduler', 'ssl-client', 'ssl-server']
     components:
       noha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
       ha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
@@ -24,7 +24,7 @@ services:
       ha: ['']
       ssl: ['']
   - name: MAPREDUCE2
-    conf: ['mapred-site', 'mapred-env', 'mapred-queue-acls']
+    conf: ['mapred-site', 'mapred-env', 'mapred-queue-acls', 'ssl-client', 'ssl-server']
     components:
       noha: ['HISTORYSERVER']
       ha: ['']

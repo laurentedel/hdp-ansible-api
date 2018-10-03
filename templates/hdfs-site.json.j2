@@ -31,7 +31,6 @@
 	      "dfs.ha.namenodes.{{ cluster_name }}": "nn1,nn2",{% endif %}
 				"dfs.heartbeat.interval": "3",
 				"dfs.hosts.exclude": "/etc/hadoop/conf/dfs.exclude",
-				"dfs.http.policy": "HTTP_ONLY",
 				"dfs.https.port": "50470",
 				"dfs.namenode.accesstime.precision": "0",
 				"dfs.namenode.audit.log.async": "true",
@@ -50,6 +49,7 @@
 				{% if cluster_services.HDFS.HA is not defined %}"dfs.namenode.http-address": "{{ first_namenode }}:50070",{% endif %}
 				{% if cluster_services.HDFS.HA is not defined %}"dfs.namenode.https-address": "{{ first_namenode }}:50470",{% endif %}
 				{% if cluster_services.HDFS.HA is defined and not cluster_services.HDFS.HA %}"dfs.namenode.secondary.http-address": "{{ second_namenode }}:50090",
+				"dfs.namenode.secondary.https-address" : "{{ second_namenode }}:50091";
 				"dfs.namenode.rpc-address": "{{ first_namenode }}:8020",{% endif %}
 				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}"dfs.namenode.http-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:50070",
 	      "dfs.namenode.http-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:50070",
@@ -64,6 +64,12 @@
 				"dfs.namenode.stale.datanode.interval": "30000",
 				"dfs.namenode.startup.delay.block.deletion.sec": "3600",
 				"dfs.namenode.write.stale.datanode.ratio": "1.0f",
+				{% if cluster_services.HDFS.SSL is defined and cluster_services.HDFS.SSL %}
+				"dfs.http.policy" : "HTTPS_ONLY",
+				"dfs.client.https.need-auth" : "false",
+				{% else %}
+				"dfs.http.policy" : "HTTP_ONLY",
+				{% endif %}
 				"dfs.permissions.enabled": "true",
 				"dfs.permissions.superusergroup": "hdfs",
 				"dfs.replication": "3",

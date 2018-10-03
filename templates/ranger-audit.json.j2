@@ -6,7 +6,7 @@
 			"properties": {
         "xasecure.audit.destination.db" : "false",
         "xasecure.audit.destination.hdfs" : "true",
-        "xasecure.audit.destination.hdfs.dir" : "hdfs://{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA == True %}{{ cluster_name }}{% else %}{{ first_namenode }}:8020{% endif %}/ranger/audit",
+        "xasecure.audit.destination.hdfs.dir" : "hdfs://{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}{{ cluster_name }}{% else %}{{ first_namenode }}:8020{% endif %}/ranger/audit",
         "xasecure.audit.destination.solr" : "true",
         "xasecure.audit.destination.solr.zookeepers" : "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}/infra-solr"
       }

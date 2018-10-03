@@ -1,5 +1,13 @@
-{"Clusters":{"desired_configs":{"type":"mapred-site","tag":"{{ range(00000000, 99999999) | random }}","properties":{ {% raw %}
-  "mapreduce.admin.map.child.java.opts" : "-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhdp.version=${hdp.version}",
+{"Clusters":{"desired_configs":{"type":"mapred-site","tag":"{{ range(00000000, 99999999) | random }}","properties":{
+  {% if cluster_services.MAPREDUCE2.SSL is defined and cluster_services.MAPREDUCE2.SSL %}
+  "mapreduce.jobhistory.http.policy" : "HTTPS_ONLY",
+  "mapreduce.ssl.enabled" : "true",
+  "mapreduce.shuffle.ssl.enabled" : "false",
+  "mapreduce.jobhistory.webapp.https.address" : "https://{{ groups['HISTORYSERVER'][0] }}:19888/jobhistory/logs",
+  {% else %}
+  "mapreduce.jobhistory.http.policy" : "HTTP_ONLY",
+  {% endif %}
+  {% raw %}"mapreduce.admin.map.child.java.opts" : "-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhdp.version=${hdp.version}",
   "mapreduce.admin.reduce.child.java.opts" : "-server -XX:NewRatio=8 -Djava.net.preferIPv4Stack=true -Dhdp.version=${hdp.version}",
   "mapreduce.admin.user.env" : "LD_LIBRARY_PATH=/usr/hdp/${hdp.version}/hadoop/lib/native:/usr/hdp/${hdp.version}/hadoop/lib/native/Linux-{{architecture}}-64",
   "mapreduce.am.max-attempts" : "2",
@@ -14,7 +22,6 @@
   "mapreduce.jobhistory.address" : "localhost:10020",
   "mapreduce.jobhistory.bind-host" : "0.0.0.0",
   "mapreduce.jobhistory.done-dir" : "/mr-history/done",
-  "mapreduce.jobhistory.http.policy" : "HTTP_ONLY",
   "mapreduce.jobhistory.intermediate-done-dir" : "/mr-history/tmp",
   "mapreduce.jobhistory.recovery.enable" : "true",
   "mapreduce.jobhistory.recovery.store.class" : "org.apache.hadoop.mapreduce.v2.hs.HistoryServerLeveldbStateStoreService",

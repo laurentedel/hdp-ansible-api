@@ -7,10 +7,15 @@
   "yarn.client.failover-proxy-provider" : "org.apache.hadoop.yarn.client.RequestHedgingRMFailoverProxyProvider",
   "yarn.client.nodemanager-connect.max-wait-ms" : "60000",
   "yarn.client.nodemanager-connect.retry-interval-ms" : "10000",
-  "yarn.http.policy" : "HTTP_ONLY",{% raw %}
-  "yarn.log-aggregation-enable" : "true",
-  "yarn.log-aggregation.retain-seconds" : "2592000",
+{% if cluster_services.YARN.SSL is defined and cluster_services.YARN.SSL %}
+  "yarn.http.policy" : "HTTPS_ONLY",
+  "yarn.log.server.url" : "https://localhost:19888/jobhistory/logs",
+  {% else %}
+  "yarn.http.policy" : "HTTP_ONLY",
   "yarn.log.server.url" : "http://localhost:19888/jobhistory/logs",
+  {% endif %}
+{% raw %}"yarn.log-aggregation-enable" : "true",
+  "yarn.log-aggregation.retain-seconds" : "2592000",
   "yarn.log.server.web-service.url" : "http://localhost:8188/ws/v1/applicationhistory",
   "yarn.node-labels.enabled" : "false",
   "yarn.node-labels.fs-store.retry-policy-spec" : "2000, 500",
@@ -57,7 +62,7 @@
   "yarn.nodemanager.resource.percentage-physical-cpu-limit" : "80",
   "yarn.nodemanager.vmem-check-enabled" : "false",
   "yarn.nodemanager.vmem-pmem-ratio" : "2.1",
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.cluster-id": "yarn-cluster",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.cluster-id": "yarn-cluster",{% endif %}
   "yarn.resourcemanager.address" : "localhost:8050",
   "yarn.resourcemanager.admin.address" : "localhost:8141",
   "yarn.resourcemanager.am.max-attempts" : "2",
@@ -66,16 +71,16 @@
   "yarn.resourcemanager.connect.retry-interval.ms" : "15000",
   "yarn.resourcemanager.fs.state-store.retry-policy-spec" : "2000, 500",
   "yarn.resourcemanager.fs.state-store.uri" : " ",
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.ha.enabled" : "true",{% else %}"yarn.resourcemanager.ha.enabled" : "false",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.hostname" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",{% else %}"yarn.resourcemanager.hostname" : "localhost",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][1] }}",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.hostname.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.webapp.https.address.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.webapp.https.address.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}:8088",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.ha.automatic-failover.zk-base-path" : "/yarn-leader-election",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA == True %}"yarn.resourcemanager.ha.rm-ids" : "rm1,rm2",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.ha.enabled" : "true",{% else %}"yarn.resourcemanager.ha.enabled" : "false",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",{% else %}"yarn.resourcemanager.hostname" : "localhost",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][1] }}",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.https.address.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.https.address.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}:8088",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.ha.automatic-failover.zk-base-path" : "/yarn-leader-election",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.ha.rm-ids" : "rm1,rm2",{% endif %}
   "yarn.resourcemanager.monitor.capacity.preemption.natural_termination_factor" : "1",
   "yarn.resourcemanager.monitor.capacity.preemption.total_preemption_per_round" : "0.1",
   "yarn.resourcemanager.nodes.exclude-path" : "/etc/hadoop/conf/yarn.exclude",
@@ -90,7 +95,7 @@
   "yarn.resourcemanager.system-metrics-publisher.enabled" : "true",
   "yarn.resourcemanager.webapp.address" : "localhost:8088",
   "yarn.resourcemanager.webapp.delegation-token-auth-filter.enabled" : "false",
-  "yarn.resourcemanager.webapp.https.address" : "localhost:8090",
+  "yarn.resourcemanager.webapp.https.address" : "localhost:8088",
   "yarn.resourcemanager.work-preserving-recovery.enabled" : "true",
   "yarn.resourcemanager.work-preserving-recovery.scheduling-wait-ms" : "10000",
   "yarn.resourcemanager.zk-acl" : "world:anyone:rwcda",

@@ -1,5 +1,10 @@
-{"Clusters":{"desired_configs":{"type":"tez-site","tag":"{{ range(00000000, 99999999) | random }}","properties":{ {% raw %}
-  "tez.am.am-rm.heartbeat.interval-ms.max" : "250",
+{"Clusters":{"desired_configs":{"type":"tez-site","tag":"{{ range(00000000, 99999999) | random }}","properties":{
+{% if cluster_services.TEZ.SSL is defined and cluster_services.TEZ.SSL %}
+"tez.runtime.shuffle.ssl.enable" : "false",
+"tez.runtime.shuffle.keep-alive.enabled" : "false",
+{% else %}
+{% endif %}
+{% raw %}"tez.am.am-rm.heartbeat.interval-ms.max" : "250",
   "tez.am.container.idle.release-timeout-max.millis" : "20000",
   "tez.am.container.idle.release-timeout-min.millis" : "10000",
   "tez.am.container.reuse.enabled" : "true",
