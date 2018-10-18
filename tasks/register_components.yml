@@ -16,9 +16,9 @@
     - components.noha
   register: registration
   loop_control:
-    label: in_item.1
+    label: "{{ in_item.1 }}"
     loop_var: in_item
-  when: in_item.1 != "" and hosts in groups[in_item.1] and cluster_services[in_item.0.name].HA is not defined
+  when: in_item.0.name in cluster_services and in_item.1 != "" and hosts in groups[in_item.1] and cluster_services[in_item.0.name].HA is not defined
   failed_when: registration.status not in [200, 201, 202, 409]
 
 - fail:
@@ -49,9 +49,9 @@
     - components.ha
   register: registration
   loop_control:
-    label: in_item.1
+    label: "{{ in_item.1 }}"
     loop_var: in_item
-  when: in_item.1 != "" and hosts in groups[in_item.1] and cluster_services[in_item.0.name].HA is defined and cluster_services[in_item.0.name].HA
+  when: in_item.0.name in cluster_services and in_item.1 != "" and hosts in groups[in_item.1] and cluster_services[in_item.0.name].HA is defined and cluster_services[in_item.0.name].HA
   failed_when: registration.status not in [200, 201, 202, 409]
 
 - fail:
@@ -82,9 +82,9 @@
     - components.client
   register: registration
   loop_control:
-    label: in_item.1
+    label: "{{ in_item.1 }}"
     loop_var: in_item
-  when: in_item.1 != "" and hosts in groups[in_item.1]
+  when: in_item.0.name in cluster_services and in_item.1 != "" and hosts in groups[in_item.1]
   failed_when: registration.status not in [200, 201, 202, 409]
 
 - fail:

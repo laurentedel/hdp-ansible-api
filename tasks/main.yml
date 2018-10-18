@@ -114,10 +114,13 @@
   with_subelements:
     - "{{ services }}"
     - conf
+  loop_control:
+    label: "{{ item.1 }}"
+  when: item.0.name in cluster_services
 
 - include: register_ranger_plugins.yml in_services={{ item }}
   with_items: "{{ cluster_services.RANGER.PLUGIN }}"
-  when: cluster_services.RANGER.PLUGIN[in_services]
+  when: cluster_services.RANGER is defined
 
 - name: Register HA components
   uri:
@@ -136,7 +139,7 @@
   with_subelements:
     - "{{ services }}"
     - components.ha
-  when: cluster_services[item.0.name].HA is defined and cluster_services[item.0.name].HA and item.1 != ""
+  when: item.0.name in cluster_services and cluster_services[item.0.name].HA is defined and cluster_services[item.0.name].HA and item.1 != ""
   failed_when: register_components_ha.status not in [409, 200, 201, 202]
 
 - name: Register components
@@ -156,7 +159,7 @@
   with_subelements:
     - "{{ services }}"
     - components.noha
-  when: cluster_services[item.0.name] is defined and cluster_services[item.0.name].HA is not defined and item.1 != ""
+  when: item.0.name in cluster_services and cluster_services[item.0.name] is defined and cluster_services[item.0.name].HA is not defined and item.1 != ""
   failed_when: register_components_noha.status not in [409, 200, 201, 202]
 
 - name: Register clients components
@@ -176,7 +179,7 @@
   with_subelements:
     - "{{ services }}"
     - components.client
-  when: cluster_services[item.0.name] is defined and item.1 != ""
+  when: item.0.name in cluster_services and cluster_services[item.0.name] is defined and item.1 != ""
   failed_when: register_components_clients.status not in [409, 200, 201, 202]
   ignore_errors: True
 
@@ -201,9 +204,6 @@
 - include: register_components.yml hosts={{ item }}
   with_items: "{{ cluster_hosts }}"
 
-- include: get_default_configuration.yml hosts={{ item }}
-  with_items: "{{ cluster_hosts }}"
-
 - name: Trigger installation
   pause: prompt='Please confirm you want to trigger the installation for the cluster {{ cluster_name }}! Press return to continue. Press Ctrl+c and then "a" to abort'
 
@@ -219,7 +219,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: check_install_all_services
 
 - name: Wait for all services to be installed
@@ -254,7 +254,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   register: check_start_all_services
 
 - name: Wait for all services to be started
@@ -268,7 +268,7 @@
     body_format: json
     status_code: 200,201,202
     validate_certs: no
-  return_content: yes
+    return_content: yes
   register: cluster_check_task_start_services
   until: (cluster_check_task_start_services.json.Requests.request_status == 'COMPLETED' and (cluster_check_task_start_services.json.Requests.completed_task_count|int > 0) or
           cluster_check_task_start_services.json.Requests.request_status == 'FAILED' or
