@@ -1,0 +1,16 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "ams-grafana-env",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": { {% raw %}
+				"content" : "\n# Set environment variables here.\n\n# AMS UI Server Home Dir\nexport AMS_GRAFANA_HOME_DIR={{ams_grafana_home_dir}}\n\n# AMS UI Server Data Dir\nexport AMS_GRAFANA_DATA_DIR={{ams_grafana_data_dir}}\n\n# AMS UI Server Log Dir\nexport AMS_GRAFANA_LOG_DIR={{ams_grafana_log_dir}}\n\n# AMS UI Server PID Dir\nexport AMS_GRAFANA_PID_DIR={{ams_grafana_pid_dir}}",
+				"metrics_grafana_data_dir" : "/var/lib/ambari-metrics-grafana",
+				"metrics_grafana_log_dir" : "/var/log/ambari-metrics-grafana",
+				"metrics_grafana_password" : "changeit",
+				"metrics_grafana_pid_dir" : "/var/run/ambari-metrics-grafana",
+				"metrics_grafana_username" : "admin"{% endraw %}
+      }
+    }
+  }
+}

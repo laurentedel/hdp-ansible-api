@@ -74,7 +74,7 @@ services:
       ha: ['']
       ssl: ['']
   - name: HIVE
-    conf: ['hive-site', 'hive-env', 'hcat-env', 'hivemetastore-site', 'hiveserver2-site', 'webhcat-site', 'webhcat-env']
+    conf: ['hive-site', 'hive-env', 'hcat-env', 'hivemetastore-site', 'hiveserver2-site', 'webhcat-site', 'webhcat-env', 'beeline-log4j2', 'hive-atlas-application.properties', 'hive-exec-log4j', 'hive-exec-log4j2', 'hive-interactive-env', 'hive-interactive-site', 'hive-log4j', 'hive-log4j2', 'hive-logsearch-conf', 'hiveserver2-interactive-site', 'llap-cli-log4j2', 'llap-daemon-log4j', 'parquet-logging', 'tez-interactive-site', 'webhcat-log4j']
     components:
       noha: ['HIVE_SERVER', 'HIVE_METASTORE', 'WEBHCAT_SERVER']
       ha: ['HIVE_SERVER', 'HIVE_METASTORE', 'WEBHCAT_SERVER']
@@ -91,5 +91,25 @@ services:
       client: ['']
     custom:
       noha: ['database_type', 'database_server', 'database_ranger_user', 'database_ranger_user_password']
+      ha: ['']
+      ssl: ['']
+  - name: AMBARI_METRICS
+    conf: ['ams-hbase-env', 'ams-logsearch-conf', 'ams-ssl-server', 'ams-hbase-security-site', 'ams-log4j', 'ams-hbase-site', 'ams-env', 'ams-site', 'ams-hbase-policy', 'ams-grafana-env', 'ams-hbase-log4j', 'ams-ssl-client', 'ams-grafana-ini']
+    components:
+      noha: ['METRICS_MONITOR', 'METRICS_GRAFANA', 'METRICS_COLLECTOR']
+      ha: ['METRICS_MONITOR', 'METRICS_GRAFANA', 'METRICS_COLLECTOR']
+      client: ['']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
+  - name: AMBARI_INFRA
+    conf: ['infra-solr-log4j', 'infra-solr-xml', 'infra-solr-security-json', 'infra-solr-client-log4j', 'infra-logsearch-conf', 'infra-solr-env']
+    components:
+      noha: ['INFRA_SOLR']
+      ha: ['INFRA_SOLR']
+      client: ['INFRA_SOLR_CLIENT']
+    custom:
+      noha: ['']
       ha: ['']
       ssl: ['']

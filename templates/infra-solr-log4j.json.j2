@@ -1,0 +1,13 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "infra-solr-log4j",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": { {% raw %}
+        "content" : "# Licensed to the Apache Software Foundation (ASF) under one or more\n# contributor license agreements.  See the NOTICE file distributed with\n# this work for additional information regarding copyright ownership.\n# The ASF licenses this file to You under the Apache License, Version 2.0\n# (the \"License\"); you may not use this file except in compliance with\n# the License.  You may obtain a copy of the License at\n#\n#     http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n\n#  Logging level\ninfra.solr.log.dir={{infra_solr_log_dir}}\n#log4j.rootLogger=INFO, file, CONSOLE\nlog4j.rootLogger=WARN, file\n\nlog4j.appender.CONSOLE=org.apache.log4j.ConsoleAppender\n\nlog4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayout\nlog4j.appender.CONSOLE.layout.ConversionPattern=%-4r [%t] %-5p %c %x [%X{collection} %X{shard} %X{replica} %X{core}] \\u2013 %m%n\n\n#- size rotation with log cleanup.\nlog4j.appender.file=org.apache.log4j.RollingFileAppender\nlog4j.appender.file.MaxFileSize={{infra_log_maxfilesize}}MB\nlog4j.appender.file.MaxBackupIndex={{infra_log_maxbackupindex}}\n\n#- File to log to and log format\nlog4j.appender.file.File=${infra.solr.log.dir}/solr.log\nlog4j.appender.file.layout=org.apache.log4j.PatternLayout\nlog4j.appender.file.layout.ConversionPattern=%d{ISO8601} [%t] %-5p [%X{collection} %X{shard} %X{replica} %X{core}] %C (%F:%L) - %m%n\n\nlog4j.logger.org.apache.zookeeper=WARN\nlog4j.logger.org.apache.hadoop=WARN\n\n# set to INFO to enable infostream log messages\nlog4j.logger.org.apache.solr.update.LoggingInfoStream=OFF",
+        "infra_log_maxbackupindex" : "9",
+        "infra_log_maxfilesize" : "10"{% endraw %}
+      }
+    }
+  }
+}
