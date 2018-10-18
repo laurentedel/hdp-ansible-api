@@ -66,6 +66,7 @@
   no_log: False
   with_items:
     - "{{ services }}"
+  when: item.name in cluster_services
   failed_when: cluster_definition.status not in [409, 200, 201, 202]
 
 - name: Load default configuration

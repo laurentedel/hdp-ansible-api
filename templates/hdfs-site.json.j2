@@ -60,7 +60,7 @@
 				"dfs.journalnode.edits.dir": "{% for dir in hdp_journalnode_dir %}{{ dir }}{% if not loop.last %},{% endif %}{% endfor %}",
 				"dfs.namenode.shared.edits.dir": "qjournal://{% for journalnode in groups['JOURNALNODE'] %}{{ journalnode }}:8485{% if not loop.last %};{% endif %}{% endfor %}/{{ cluster_name }}",
 				"dfs.nameservices": "{{ cluster_name }}",{% endif %}
-				{% if cluster_services.RANGER.PLUGIN.HDFS is defined and cluster_services.RANGER.PLUGIN.HDFS %}"dfs.namenode.inode.attributes.provider.class" : "org.apache.ranger.authorization.hadoop.RangerHdfsAuthorizer",{% endif %}
+				{% if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HDFS is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HDFS %}"dfs.namenode.inode.attributes.provider.class" : "org.apache.ranger.authorization.hadoop.RangerHdfsAuthorizer",{% endif %}
 				"dfs.namenode.stale.datanode.interval": "30000",
 				"dfs.namenode.startup.delay.block.deletion.sec": "3600",
 				"dfs.namenode.write.stale.datanode.ratio": "1.0f",

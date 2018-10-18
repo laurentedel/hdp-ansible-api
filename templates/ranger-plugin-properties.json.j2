@@ -4,7 +4,7 @@
 			"type": "ranger-{{ in_services|lower }}-plugin-properties",
 			"tag": "{{ range(00000000, 99999999) | random }}",
 			"properties": {
-				"ranger-{{ in_services|lower }}-plugin-enabled" : "{%if cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] %}Yes{% else %}No{% endif %}",
+				"ranger-{{ in_services|lower }}-plugin-enabled" : "{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] %}Yes{% else %}No{% endif %}",
 				"REPOSITORY_CONFIG_USERNAME" : "{{ in_services|lower }}",
         "common.name.for.certificate" : "",
         "external_admin_password" : "{{ranger_admin_password}}",
@@ -13,14 +13,14 @@
         "external_ranger_admin_username" : "amb_ranger_admin",
         "hadoop.rpc.protection" : "authentication",
         "policy_user" : "ambari-qa",
-				{%if cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" %}
+				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" %}
 				"dfs.nameservices": "{{ cluster_name }}",
 				"dfs.ha.namenodes.{{ cluster_name }}" : "nn1,nn2",
 				"dfs.namenode.rpc-address.{{ cluster_name }}.nn1": "{{ groups['NAMENODE'][0] }}:8020",
 	      "dfs.namenode.rpc-address.{{ cluster_name }}.nn2" : "{{ groups['NAMENODE'][1] }}:8020",
 				"dfs.client.failover.proxy.provider.{{ cluster_name }}" : "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",
 				{% endif %}
-        {%if cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HIVE" %}"jdbc.driverClassName" : "org.apache.hive.jdbc.HiveDriver",{% endif %}
+        {%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HIVE" %}"jdbc.driverClassName" : "org.apache.hive.jdbc.HiveDriver",{% endif %}
 				"REPOSITORY_CONFIG_PASSWORD" : "{{ in_services|lower }}"
       }
     }

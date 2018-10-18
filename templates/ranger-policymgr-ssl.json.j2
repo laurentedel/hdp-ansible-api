@@ -4,17 +4,35 @@
 			"type": "ranger-{{ in_services|lower }}-policymgr-ssl",
 			"tag": "{{ range(00000000, 99999999) | random }}",
 			"properties": {
-			{%if cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" %}
+			{% if cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and in_services == "HDFS"%}
+				"xasecure.policymgr.clientssl.keystore" : "{{ ssl_keystore_path }}",
+				"xasecure.policymgr.clientssl.truststore" : "{{ ssl_truststore_path }}",
+				"xasecure.policymgr.clientssl.keystore.password" : "{{ ssl_keystore_password }}",
+				"xasecure.policymgr.clientssl.truststore.password" : "{{ ssl_truststore_password }}",
+        "xasecure.policymgr.clientssl.keystore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_hadoop/cred.jceks",
+        "xasecure.policymgr.clientssl.truststore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_hadoop/cred.jceks"
+			{% elif cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and in_services != "HDFS"%}
+				"xasecure.policymgr.clientssl.keystore" : "{{ ssl_keystore_path }}",
+				"xasecure.policymgr.clientssl.truststore" : "{{ ssl_truststore_path }}",
+				"xasecure.policymgr.clientssl.keystore.password" : "{{ ssl_keystore_password }}",
+				"xasecure.policymgr.clientssl.truststore.password" : "{{ ssl_truststore_password }}",
+        "xasecure.policymgr.clientssl.keystore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_{{ in_services|lower }}/cred.jceks",
+        "xasecure.policymgr.clientssl.truststore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_{{ in_services|lower }}/cred.jceks"
+			{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" and cluster_services.RANGER.SSL is not defined or cluster_services.RANGER.SSL is defined and not cluster_services.RANGER.SSL %}
         "xasecure.policymgr.clientssl.keystore" : "/usr/hdp/current/hadoop-client/conf/ranger-plugin-keystore.jks",
         "xasecure.policymgr.clientssl.truststore" : "/usr/hdp/current/hadoop-client/conf/ranger-plugin-truststore.jks",
+        "xasecure.policymgr.clientssl.keystore.password" : "changeit",
+        "xasecure.policymgr.clientssl.truststore.password" : "changeit",
+        "xasecure.policymgr.clientssl.keystore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_hadoop/cred.jceks",
+        "xasecure.policymgr.clientssl.truststore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_hadoop/cred.jceks"
 			{% else %}
         "xasecure.policymgr.clientssl.keystore" : "/usr/hdp/current/{{ in_services|lower }}-client/conf/ranger-plugin-keystore.jks",
         "xasecure.policymgr.clientssl.truststore" : "/usr/hdp/current/{{ in_services|lower }}-client/conf/ranger-plugin-truststore.jks",
-			{% endif %}
-        "xasecure.policymgr.clientssl.keystore.credential.file" : {% raw %}"jceks://file{{credential_file}}",{% endraw %}
         "xasecure.policymgr.clientssl.keystore.password" : "changeit",
-        "xasecure.policymgr.clientssl.truststore.credential.file" : {% raw %}"jceks://file{{credential_file}}",{% endraw %}
-        "xasecure.policymgr.clientssl.truststore.password" : "changeit"
+        "xasecure.policymgr.clientssl.truststore.password" : "changeit",
+        "xasecure.policymgr.clientssl.keystore.credential.file" : {% raw %}"jceks://file{{credential_file}}",{% endraw %}
+        "xasecure.policymgr.clientssl.truststore.credential.file" : {% raw %}"jceks://file{{credential_file}}"{% endraw %}
+			{% endif %}
       }
     }
 }
