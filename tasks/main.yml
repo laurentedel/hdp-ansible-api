@@ -115,23 +115,6 @@
     - "{{ services }}"
     - conf
 
-- name: Load configuration for differents services
-  uri:
-    url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}"
-    method: PUT
-    force_basic_auth: yes
-    user: "{{ ambari_username }}"
-    password: "{{ ambari_password }}"
-    headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
-    body: "{{ lookup('template','templates/{{ item.1 }}.json.j2') }}"
-    body_format: json
-    validate_certs: no
-    status_code: 200,201,202
-    return_content: yes
-  with_subelements:
-    - "{{ services }}"
-    - conf
-
 - include: register_ranger_plugins.yml in_services={{ item }}
   with_items: "{{ cluster_services.RANGER.PLUGIN }}"
   when: cluster_services.RANGER.PLUGIN[in_services]
@@ -218,6 +201,9 @@
 - include: register_components.yml hosts={{ item }}
   with_items: "{{ cluster_hosts }}"
 
+- include: get_default_configuration.yml hosts={{ item }}
+  with_items: "{{ cluster_hosts }}"
+
 - name: Trigger installation
   pause: prompt='Please confirm you want to trigger the installation for the cluster {{ cluster_name }}! Press return to continue. Press Ctrl+c and then "a" to abort'
 
@@ -235,9 +221,6 @@
     status_code: 200,201,202
   return_content: yes
   register: check_install_all_services
-
-- debug:
-    var: check_install_all_services
 
 - name: Wait for all services to be installed
   uri:
