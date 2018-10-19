@@ -113,3 +113,13 @@ services:
       noha: ['']
       ha: ['']
       ssl: ['']
+  - name: KAFKA
+    conf: ['kafka-broker', 'kafka-env', 'kafka-log4j', 'kafka-logsearch-conf', 'kafka_client_jaas_conf', 'kafka_jaas_conf']
+    components:
+      noha: ['KAFKA_BROKER']
+      ha: ['KAFKA_BROKER']
+      client: ['']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
