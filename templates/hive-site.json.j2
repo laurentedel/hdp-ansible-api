@@ -94,7 +94,7 @@
         "hive.metastore.pre.event.listeners" : "org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener",
         "hive.metastore.sasl.enabled" : "false",
         "hive.metastore.server.max.threads" : "100000",
-        "hive.metastore.uris" : "thrift://localhost:9083",
+        "hive.metastore.uris" : "thrift://{{ groups['HIVE_METASTORE'][0] }}:9083",
         "hive.metastore.warehouse.dir" : "/apps/hive/warehouse",
         "hive.optimize.bucketmapjoin" : "true",
         "hive.optimize.bucketmapjoin.sortedmerge" : "false",

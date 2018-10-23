@@ -8,8 +8,8 @@
   "templeton.hive.archive" : "hdfs:///hdp/apps/${hdp.version}/hive/hive.tar.gz",
   "templeton.hive.extra.files" : "/usr/hdp/${hdp.version}/tez/conf/tez-site.xml,/usr/hdp/${hdp.version}/tez,/usr/hdp/${hdp.version}/tez/lib",
   "templeton.hive.home" : "hive.tar.gz/hive",
-  "templeton.hive.path" : "hive.tar.gz/hive/bin/hive",
-  "templeton.hive.properties" : "hive.metastore.local=false,hive.metastore.uris=thrift://localhost:9083,hive.metastore.sasl.enabled=false",
+  "templeton.hive.path" : "hive.tar.gz/hive/bin/hive",{% endraw %}
+  "templeton.hive.properties" : "hive.metastore.local=false,hive.metastore.uris=thrift://{{ groups['HIVE_METASTORE'][0] }}:9083,hive.metastore.sasl.enabled=false",{% raw %}
   "templeton.jar" : "/usr/hdp/${hdp.version}/hive/share/webhcat/svr/lib/hive-webhcat-*.jar",
   "templeton.libjars" : "/usr/hdp/${hdp.version}/zookeeper/zookeeper.jar,/usr/hdp/${hdp.version}/hive/lib/hive-common.jar",
   "templeton.override.enabled" : "false",

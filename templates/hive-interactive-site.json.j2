@@ -54,8 +54,8 @@
         "hive.map.aggr.hash.min.reduction" : "0.99",
         "hive.mapjoin.hybridgrace.hashtable" : "false",
         "hive.merge.nway.joins" : "false",
-        "hive.metastore.event.listeners" : "",
-        "hive.metastore.uris" : "",
+        "hive.metastore.event.listeners" : "",{% endraw %}
+        "hive.metastore.uris" : "thrift://{{ groups['HIVE_METASTORE'][0] }}:9083",{% raw %}
         "hive.optimize.dynamic.partition.hashjoin" : "true",
         "hive.prewarm.enabled" : "false",
         "hive.server2.enable.doAs" : "false",
