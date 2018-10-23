@@ -1,0 +1,15 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "spark2-hive-site-override",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": { {% raw %}
+        "hive.metastore.client.connect.retry.delay" : "5",
+        "hive.metastore.client.socket.timeout" : "1800",
+        "hive.server2.enable.doAs" : "false",
+        "hive.server2.thrift.port" : "10016",
+        "hive.server2.transport.mode" : "binary" {% endraw %}
+      }
+    }
+  }
+}

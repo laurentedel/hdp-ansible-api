@@ -1,0 +1,21 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "spark2-defaults",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": { {% raw %}
+        "spark.driver.extraLibraryPath" : "{{spark_hadoop_lib_native}}",
+        "spark.eventLog.dir" : "hdfs:///spark2-history/",
+        "spark.eventLog.enabled" : "true",
+        "spark.executor.extraLibraryPath" : "{{spark_hadoop_lib_native}}",
+        "spark.history.fs.logDirectory" : "hdfs:///spark2-history/",
+        "spark.history.kerberos.keytab" : "none",
+        "spark.history.kerberos.principal" : "none",
+        "spark.history.provider" : "org.apache.spark.deploy.history.FsHistoryProvider",
+        "spark.history.ui.port" : "18081",
+        "spark.yarn.historyServer.address" : "{{spark_history_server_host}}:{{spark_history_ui_port}}",
+        "spark.yarn.queue" : "default" {% endraw %}
+      }
+    }
+  }
+}
