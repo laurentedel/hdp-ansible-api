@@ -1,4 +1,5 @@
 {"Clusters":{"desired_configs":{"type":"yarn-site","tag":"{{ range(00000000, 99999999) | random }}","properties":{
+  {% if cluster_services.SPARK2 is defined and cluster_services.SPARK2.SSL is defined and cluster_services.SPARK2.SSL %}"spark.authenticate" : "true",{% endif %}
   "hadoop.registry.rm.enabled" : "false",
   "hadoop.registry.zk.quorum" : "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}",
   "yarn.acl.enable" : "false",
