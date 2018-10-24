@@ -133,3 +133,13 @@ services:
       noha: ['']
       ha: ['']
       ssl: ['']
+  - name: OOZIE
+    conf: ['oozie-env', 'oozie-log4j', 'oozie-logsearch-conf', 'oozie-site']
+    components:
+      noha: ['OOZIE_SERVER']
+      ha: ['OOZIE_SERVER']
+      client: ['OOZIE_CLIENT']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
