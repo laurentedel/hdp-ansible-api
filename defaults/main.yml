@@ -143,3 +143,13 @@ services:
       noha: ['']
       ha: ['']
       ssl: ['']
+  - name: SMARTSENSE
+    conf: ['activity-conf', 'activity-env', 'activity-log4j', 'activity-zeppelin-env', 'activity-zeppelin-interpreter', 'activity-zeppelin-shiro', 'activity-zeppelin-site', 'anonymization-rules', 'hst-agent-conf', 'hst-log4j', 'hst-server-conf', 'product-info']
+    components:
+      noha: ['ACTIVITY_ANALYZER', 'ACTIVITY_EXPLORER', 'HST_SERVER']
+      ha: ['ACTIVITY_ANALYZER', 'ACTIVITY_EXPLORER', 'HST_SERVER']
+      client: ['HST_AGENT']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']

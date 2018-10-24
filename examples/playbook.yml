@@ -41,11 +41,18 @@
         database_ranger: ranger_db
         database_ranger_user: ranger
         database_ranger_user_password: ranger123
+        database_oozie: oozie_db
+        database_oozie_user: oozie
+        database_oozie_user_password: oozie123
         ranger_admin_password: test12345678
         ssl_truststore_path: "/etc/security/serverKeys/truststore.jks"
         ssl_truststore_password: truststore123
         ssl_keystore_path: "/etc/security/serverKeys/keystore.jks"
         ssl_keystore_password: keystore123
+        ranger_truststore_alias: "master1"
+        ranger_keystore_credential_alias: "master1"
+        ranger_keystore_keyalias: "master1"
+        hst_agent_version: "1.4.5.2.6.2.2-1"  ## Must match your package version
         cluster_services:
           HDFS:
             HA: True
@@ -66,3 +73,10 @@
               HDFS: True
               YARN: True
               HIVE: True
+          AMBARI_INFRA:
+          AMBARI_METRICS:
+          KAFKA:
+          SPARK2:
+            SSL: True
+          OOZIE:
+          SMARTSENSE:
