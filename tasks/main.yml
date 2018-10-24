@@ -84,6 +84,7 @@
     return_content: yes
   with_items:
    - "{{ base_cluster.conf }}"
+  when: create_cluster.status != 409
 
 - name: Activate cluster
   uri:
@@ -98,6 +99,7 @@
     validate_certs: no
     status_code: 200,201,202
     return_content: yes
+  when: create_cluster.status != 409
 
 - name: Load configuration for differents services
   uri:
