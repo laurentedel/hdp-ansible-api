@@ -153,3 +153,13 @@ services:
       noha: ['']
       ha: ['']
       ssl: ['']
+  - name: SQOOP
+    conf: ['sqoop-atlas-application.properties', 'sqoop-env', 'sqoop-site']
+    components:
+      noha: ['SQOOP']
+      ha: ['SQOOP']
+      client: ['']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']
