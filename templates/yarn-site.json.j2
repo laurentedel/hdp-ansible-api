@@ -10,15 +10,15 @@
   "yarn.client.nodemanager-connect.retry-interval-ms" : "10000",
 {% if cluster_services.YARN.SSL is defined and cluster_services.YARN.SSL %}
   "yarn.http.policy" : "HTTPS_ONLY",
-  "yarn.log.server.url" : "https://localhost:19888/jobhistory/logs",
+  "yarn.log.server.url" : "https://{{ groups['HISTORYSERVER'][0] }}:19888/jobhistory/logs",
   {% else %}
   "yarn.http.policy" : "HTTP_ONLY",
-  "yarn.log.server.url" : "http://localhost:19888/jobhistory/logs",
+  "yarn.log.server.url" : "http://{{ groups['HISTORYSERVER'][0] }}:19888/jobhistory/logs",
   {% endif %}
-{% raw %}"yarn.log-aggregation-enable" : "true",
+  "yarn.log-aggregation-enable" : "true",
   "yarn.log-aggregation.retain-seconds" : "2592000",
-  "yarn.log.server.web-service.url" : "http://localhost:8188/ws/v1/applicationhistory",
-  "yarn.node-labels.enabled" : "false",
+  "yarn.log.server.web-service.url" : "http://{{ groups['APP_TIMELINE_SERVER'][0] }}:8188/ws/v1/applicationhistory",
+  "yarn.node-labels.enabled" : "false",{% raw %}
   "yarn.node-labels.fs-store.retry-policy-spec" : "2000, 500",
   "yarn.node-labels.fs-store.root-dir" : "/system/yarn/node-labels",
   "yarn.nodemanager.address" : "0.0.0.0:45454",
@@ -64,8 +64,8 @@
   "yarn.nodemanager.vmem-check-enabled" : "false",
   "yarn.nodemanager.vmem-pmem-ratio" : "2.1",
   {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.cluster-id": "yarn-cluster",{% endif %}
-  "yarn.resourcemanager.address" : "localhost:8050",
-  "yarn.resourcemanager.admin.address" : "localhost:8141",
+  "yarn.resourcemanager.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8050",
+  "yarn.resourcemanager.admin.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8141",
   "yarn.resourcemanager.am.max-attempts" : "2",
   "yarn.resourcemanager.bind-host" : "0.0.0.0",
   "yarn.resourcemanager.connect.max-wait.ms" : "-1",
@@ -86,17 +86,17 @@
   "yarn.resourcemanager.monitor.capacity.preemption.total_preemption_per_round" : "0.1",
   "yarn.resourcemanager.nodes.exclude-path" : "/etc/hadoop/conf/yarn.exclude",
   "yarn.resourcemanager.recovery.enabled" : "true",
-  "yarn.resourcemanager.resource-tracker.address" : "localhost:8025",
-  "yarn.resourcemanager.scheduler.address" : "localhost:8030",
+  "yarn.resourcemanager.resource-tracker.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8025",
+  "yarn.resourcemanager.scheduler.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8030",
   "yarn.resourcemanager.scheduler.class" : "org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler",
   "yarn.resourcemanager.scheduler.monitor.enable" : "false",
   "yarn.resourcemanager.state-store.max-completed-applications" : "${yarn.resourcemanager.max-completed-applications}",
   "yarn.resourcemanager.store.class" : "org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
   "yarn.resourcemanager.system-metrics-publisher.dispatcher.pool-size" : "10",
   "yarn.resourcemanager.system-metrics-publisher.enabled" : "true",
-  "yarn.resourcemanager.webapp.address" : "localhost:8088",
+  "yarn.resourcemanager.webapp.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",
   "yarn.resourcemanager.webapp.delegation-token-auth-filter.enabled" : "false",
-  "yarn.resourcemanager.webapp.https.address" : "localhost:8088",
+  "yarn.resourcemanager.webapp.https.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",
   "yarn.resourcemanager.work-preserving-recovery.enabled" : "true",
   "yarn.resourcemanager.work-preserving-recovery.scheduling-wait-ms" : "10000",
   "yarn.resourcemanager.zk-acl" : "world:anyone:rwcda",
@@ -110,7 +110,7 @@
   "yarn.scheduler.maximum-allocation-vcores" : "1",
   "yarn.scheduler.minimum-allocation-mb" : "1024",
   "yarn.scheduler.minimum-allocation-vcores" : "1",
-  "yarn.timeline-service.address" : "localhost:10200",
+  "yarn.timeline-service.address" : "{{ groups['APP_TIMELINE_SERVER'][0] }}:10200",
   "yarn.timeline-service.bind-host" : "0.0.0.0",
   "yarn.timeline-service.client.fd-flush-interval-secs" : "5",
   "yarn.timeline-service.client.max-retries" : "30",
@@ -140,8 +140,8 @@
   "yarn.timeline-service.ttl-enable" : "true",
   "yarn.timeline-service.ttl-ms" : "2678400000",
   "yarn.timeline-service.version" : "1.5",
-  "yarn.timeline-service.webapp.address" : "localhost:8188",
-  "yarn.timeline-service.webapp.https.address" : "localhost:8190"
+  "yarn.timeline-service.webapp.address" : "{{ groups['APP_TIMELINE_SERVER'][0] }}:8188",
+  "yarn.timeline-service.webapp.https.address" : "{{ groups['APP_TIMELINE_SERVER'][0] }}:8190"
 }
 }
 }

@@ -18,15 +18,15 @@
   "mapreduce.job.counters.max" : "130",
   "mapreduce.job.emit-timeline-data" : "false",
   "mapreduce.job.queuename" : "default",
-  "mapreduce.job.reduce.slowstart.completedmaps" : "0.05",
-  "mapreduce.jobhistory.address" : "localhost:10020",
+  "mapreduce.job.reduce.slowstart.completedmaps" : "0.05",{% endraw %}
+  "mapreduce.jobhistory.address" : "{{ groups['HISTORYSERVER'][0] }}:10020",
   "mapreduce.jobhistory.bind-host" : "0.0.0.0",
   "mapreduce.jobhistory.done-dir" : "/mr-history/done",
   "mapreduce.jobhistory.intermediate-done-dir" : "/mr-history/tmp",
   "mapreduce.jobhistory.recovery.enable" : "true",
   "mapreduce.jobhistory.recovery.store.class" : "org.apache.hadoop.mapreduce.v2.hs.HistoryServerLeveldbStateStoreService",
   "mapreduce.jobhistory.recovery.store.leveldb.path" : "/hadoop/mapreduce/jhs",
-  "mapreduce.jobhistory.webapp.address" : "localhost:19888",
+  "mapreduce.jobhistory.webapp.address" : "{{ groups['HISTORYSERVER'][0] }}:19888", {% raw %}
   "mapreduce.map.java.opts" : "-Xmx3276m",
   "mapreduce.map.log.level" : "INFO",
   "mapreduce.map.memory.mb" : "4096",
