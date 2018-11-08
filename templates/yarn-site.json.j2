@@ -2,7 +2,12 @@
   {% if cluster_services.SPARK2 is defined and cluster_services.SPARK2.SSL is defined and cluster_services.SPARK2.SSL %}"spark.authenticate" : "true",{% endif %}
   "hadoop.registry.rm.enabled" : "false",
   "hadoop.registry.zk.quorum" : "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}",
+  {% if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN.HDFS %}
+  "yarn.acl.enable" : "true",
+  "yarn.authorization-provider" : "org.apache.ranger.authorization.yarn.authorizer.RangerYarnAuthorizer",
+  {% else %}
   "yarn.acl.enable" : "false",
+  {% endif %}
   "yarn.admin.acl" : "yarn",
   "yarn.application.classpath" : "/etc/hadoop/conf,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*",
   "yarn.client.failover-proxy-provider" : "org.apache.hadoop.yarn.client.RequestHedgingRMFailoverProxyProvider",

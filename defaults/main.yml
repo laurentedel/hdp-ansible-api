@@ -163,3 +163,13 @@ services:
       noha: ['']
       ha: ['']
       ssl: ['']
+  - name: RANGER_KMS
+    conf: ['dbks-site', 'kms-env', 'kms-log4j', 'kms-properties', 'kms-site', 'ranger-kms-audit', 'ranger-kms-logsearch-conf', 'ranger-kms-policymgr-ssl', 'ranger-kms-security', 'ranger-kms-site']
+    components:
+      noha: ['RANGER_KMS_SERVER']
+      ha: ['RANGER_KMS_SERVER']
+      client: ['']
+    custom:
+      noha: ['']
+      ha: ['']
+      ssl: ['']

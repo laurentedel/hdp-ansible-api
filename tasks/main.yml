@@ -245,6 +245,12 @@
   delay: 10
   when: wait and check_install_all_services is defined and check_install_all_services.json is defined and check_install_all_services and (check_install_all_services.json) != ""
 
+- lineinfile:
+    path: /usr/hdp/current/ranger-admin/ews/ranger-admin-services.sh
+    regexp: '^JAVA_OPTS=" ${JAVA_OPTS} -XX:MaxPermSize=256m -Xmx1024m -Xms1024m'
+    line: 'JAVA_OPTS=" ${JAVA_OPTS} -XX:MaxPermSize=256m -Xmx1024m -Xms1024m -Djavax.net.ssl.trustStore={{ ssl_truststore_path }} -Djavax.net.ssl.trustStorePassword={{ ssl_truststore_password }} "'
+  when: cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.2WAY is defined and cluster_services.RANGER.2WAY
+
 - name: Start all services
   uri:
     url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}/services?ServiceInfo/state=INSTALLED"

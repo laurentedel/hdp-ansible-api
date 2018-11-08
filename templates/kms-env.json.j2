@@ -1,0 +1,21 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "kms-env",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": {
+        "create_db_user" : "false",
+        "hsm_partition_password" : "",
+        "kms_group" : "kms",
+        "kms_log_dir" : "/var/log/ranger/kms",
+				{% if cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL %}
+        "kms_port" : "9393",
+				{% else %}
+				"kms_port" : "9292",
+				{% endif %}
+        "kms_user" : "kms",
+        "ranger_kms_pid_dir" : "/var/run/ranger_kms"
+      }
+    }
+  }
+}

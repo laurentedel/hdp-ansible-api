@@ -1,0 +1,20 @@
+{
+	"Clusters": {
+		"desired_configs": {
+			"type": "ranger-kms-audit",
+			"tag": "{{ range(00000000, 99999999) | random }}",
+			"properties": { {% raw %}
+        "ranger.plugin.kms.ambari.cluster.name" : "{{cluster_name}}",
+        "xasecure.audit.destination.hdfs" : "true",
+        "xasecure.audit.destination.hdfs.batch.filespool.dir" : "/var/log/ranger/kms/audit/hdfs/spool", {% endraw %}
+        "xasecure.audit.destination.hdfs.dir" : "{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}{{ cluster_name }}{% else %}{{ first_namenode }}:8020{% endif %}/ranger/audit",
+        "xasecure.audit.destination.solr" : "true",
+        "xasecure.audit.destination.solr.batch.filespool.dir" : "/var/log/ranger/kms/audit/solr/spool",
+        "xasecure.audit.destination.solr.urls" : "",
+        "xasecure.audit.destination.solr.zookeepers" : "NONE",
+        "xasecure.audit.is.enabled" : "true",
+        "xasecure.audit.provider.summary.enabled" : "false"
+      }
+    }
+  }
+}
