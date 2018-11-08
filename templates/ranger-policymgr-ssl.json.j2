@@ -25,7 +25,7 @@
         "xasecure.policymgr.clientssl.truststore.password" : "changeit",
         "xasecure.policymgr.clientssl.keystore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_hadoop/cred.jceks",
         "xasecure.policymgr.clientssl.truststore.credential.file" : "jceks://file/etc/ranger/{{cluster_name}}_hadoop/cred.jceks"
-			{% elif cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.2WAY is defined and cluster_services.RANGER.2WAY %}
+			{% elif cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY %}
 				"xasecure.policymgr.clientssl.keystore" : "{{ ranger_plugin_keystore_path }}",
 				"xasecure.policymgr.clientssl.truststore" : "{{ ssl_truststore_path }}",
 				"xasecure.policymgr.clientssl.keystore.password" : "{{ ranger_plugin_keystore_password }}",

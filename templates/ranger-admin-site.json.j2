@@ -10,7 +10,7 @@
         "ranger.jpa.jdbc.password" : "{{ database_ranger_user_password }}",
 				"ranger.audit.source.type": "solr",
 				"ranger.audit.solr.zookeepers": "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}",
-			{% if cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.2WAY is not defined %}
+				{% if cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is not defined %}
 				"ranger.service.http.enabled" : "false",
         "ranger.truststore.alias" : "{{ ranger_truststore_alias }}",
         "ranger.truststore.file" : "{{ ssl_truststore_path }}",
@@ -24,7 +24,7 @@
 				"ranger.service.https.attrib.keystore.file" : "{{ ssl_keystore_path }}",
 				"ranger.service.https.attrib.keystore.pass" : "{{ ssl_keystore_password }}",
 				"ranger.service.https.attrib.client.auth" : "false",
-			{% if cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.2WAY is defined and cluster_services.RANGER.2WAY %}
+				{% elif cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY %}
 				"ranger.service.http.enabled" : "false",
         "ranger.truststore.alias" : "{{ ranger_truststore_alias }}",
         "ranger.truststore.file" : "{{ ssl_truststore_path }}",

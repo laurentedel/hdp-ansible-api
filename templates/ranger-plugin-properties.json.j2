@@ -6,7 +6,7 @@
 			"properties": {
 				"ranger-{{ in_services|lower }}-plugin-enabled" : "{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] %}Yes{% else %}No{% endif %}",
 				"REPOSITORY_CONFIG_USERNAME" : "{{ in_services|lower }}",
-				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.2WAY is defined and cluster_services.RANGER.2WAY %}
+				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER.PLUGIN[in_services] and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY %}
 				"common.name.for.certificate" : "{{ ranger_plugin_keystore_alias }}",
 				{% else %}
 				"common.name.for.certificate" : "",

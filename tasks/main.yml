@@ -249,7 +249,7 @@
     path: /usr/hdp/current/ranger-admin/ews/ranger-admin-services.sh
     regexp: '^JAVA_OPTS=" ${JAVA_OPTS} -XX:MaxPermSize=256m -Xmx1024m -Xms1024m'
     line: 'JAVA_OPTS=" ${JAVA_OPTS} -XX:MaxPermSize=256m -Xmx1024m -Xms1024m -Djavax.net.ssl.trustStore={{ ssl_truststore_path }} -Djavax.net.ssl.trustStorePassword={{ ssl_truststore_password }} "'
-  when: cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.2WAY is defined and cluster_services.RANGER.2WAY
+  when: cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY
 
 - name: Start all services
   uri:
