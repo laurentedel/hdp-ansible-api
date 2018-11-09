@@ -15,13 +15,11 @@
         "ranger.plugin.{{ in_services|lower }}.service.name" : {% raw %}"{{repo_name}}",{% endraw %}
 				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HIVE" %}
 				{% raw %}"ranger.plugin.hive.policy.rest.ssl.config.file" : "/usr/hdp/current/{{ranger_hive_component}}/conf/conf.server/ranger-policymgr-ssl.xml"{% endraw %}
-				{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL %}
+				{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services in ["HDFS", "YARN"] and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL %}
 				"xasecure.add-hadoop-authorization" : "true",
-				"ranger.plugin.hdfs.policy.rest.ssl.config.file" : "/etc/hadoop/conf/ranger-policymgr-ssl.xml"
-				{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" %}
+				"ranger.plugin.{{ in_services|lower }}.policy.rest.ssl.config.file" : "/etc/hadoop/conf/ranger-policymgr-ssl.xml"
+				{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL %}
 				"xasecure.add-hadoop-authorization" : "true"
-				{% elif cluster_services.RANGER is defined and cluster_services.RANGER_KMS is defined %}
-				"ranger.plugin.kms.policy.rest.ssl.config.file" : "/etc/ranger/kms/conf/ranger-policymgr-ssl.xml"
 				{% else %}
 				"ranger.plugin.{{ in_services|lower }}.policy.rest.ssl.config.file" : "/etc/{{ in_services|lower }}/conf/ranger-policymgr-ssl.xml"
 				{% endif %}
