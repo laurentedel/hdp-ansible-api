@@ -12,6 +12,8 @@
         "ranger.service.https.attrib.client.auth" : "false", {% endraw %}
 				{% if cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL %}
         "ranger.service.https.attrib.keystore.credential.alias" : "keyStoreCredentialAlias",
+				"ranger.https.attrib.keystore.file" : "{{ ssl_keystore_path }}",
+        "ranger.service.https.attrib.keystore.file" : "{{ ssl_keystore_path }}",
         "ranger.service.https.attrib.keystore.keyalias" : "{{ ranger_keystore_keyalias }}",
         "ranger.service.https.attrib.keystore.pass" : "{{ ssl_keystore_password }}",
         "ranger.service.https.attrib.ssl.enabled" : "true",
