@@ -245,6 +245,8 @@
   delay: 10
   when: wait and check_install_all_services is defined and check_install_all_services.json is defined and check_install_all_services and (check_install_all_services.json) != ""
 
+######## Ranger Admin and KMS 2-Way SSL Fix ########
+## Check https://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.6.5/bk_security/content/configure_ambari_ranger_ssl_public_ca_certs_plugins_hdfs.html
 - lineinfile:
     path: /usr/hdp/current/ranger-admin/ews/ranger-admin-services.sh
     regexp: '^JAVA_OPTS='
@@ -252,6 +254,7 @@
   when: cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY
   become: yes
   delegate_to: "{{ groups['RANGER_ADMIN'][0] }}"
+####################################################
 
 - name: Start all services
   uri:
@@ -288,3 +291,20 @@
   retries: "{{ wait_timeout // 10 }}"
   delay: 10
   when: wait and check_start_all_services is defined and check_start_all_services and (check_start_all_services.json) != ""
+
+######## Ranger Admin and KMS 2-Way SSL Fix ########
+- name: Set common certificate name for KMS repository in Ranger Admin
+  uri:
+    url: "{% if cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY %}https://{{ groups['RANGER_ADMIN'][0] }}:6182{% else %}http://{{ groups['RANGER_ADMIN'][0] }}:6080{% endif %}/service/public/v2/api/service/name/{{ cluster_name }}_kms"
+    method: PUT
+    force_basic_auth: yes
+    user: "admin"
+    password: "{{ ranger_admin_password }}"
+    headers: '{"Content-Type": "application/json"}'
+    body: "{{ lookup('template','templates/ranger_kms_twoway_ssl_fix_repo.json.j2') }}"
+    body_format: json
+    validate_certs: no
+    status_code: 200,201,202
+    return_content: yes
+  when: cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY
+####################################################
