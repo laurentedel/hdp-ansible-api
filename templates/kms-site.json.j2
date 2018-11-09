@@ -18,7 +18,11 @@
         "hadoop.kms.cache.enable" : "true",
         "hadoop.kms.cache.timeout.ms" : "600000",
         "hadoop.kms.current.key.cache.timeout.ms" : "30000",{% endraw %}
+				{% if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL %}
+        "hadoop.kms.key.provider.uri" : "dbks://https@{{ groups['RANGER_KMS_SERVER'][0] }}:9393/kms",
+				{% else %}
         "hadoop.kms.key.provider.uri" : "dbks://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",
+				{% endif %}
         "hadoop.kms.proxyuser.yarn.groups" : "*",
         "hadoop.kms.proxyuser.yarn.hosts" : "*",
         "hadoop.kms.proxyuser.yarn.users" : "*",
