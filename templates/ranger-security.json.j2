@@ -20,6 +20,8 @@
 				"ranger.plugin.hdfs.policy.rest.ssl.config.file" : "/etc/hadoop/conf/ranger-policymgr-ssl.xml"
 				{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HDFS" %}
 				"xasecure.add-hadoop-authorization" : "true"
+				{% elif cluster_services.RANGER is defined and cluster_services.RANGER_KMS is defined %}
+				"ranger.plugin.kms.policy.rest.ssl.config.file" : "/etc/ranger/kms/conf/ranger-policymgr-ssl.xml"
 				{% else %}
 				"ranger.plugin.{{ in_services|lower }}.policy.rest.ssl.config.file" : "/etc/{{ in_services|lower }}/conf/ranger-policymgr-ssl.xml"
 				{% endif %}
