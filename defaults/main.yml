@@ -73,6 +73,12 @@ services:
       noha: ['']
       ha: ['']
       ssl: ['']
+  - name: HBASE
+    conf: ['hbase-site', 'hbase-env', 'hbase-policy', 'hbase-log4j', 'hbase-logsearch-conf']
+    components:
+      noha: ['HBASE_MASTER', 'HBASE_REGIONSERVER']
+      ha: ['HBASE_MASTER', 'HBASE_REGIONSERVER']
+      client: ['HBASE_CLIENT']
   - name: HIVE
     conf: ['hive-site', 'hive-env', 'hcat-env', 'hivemetastore-site', 'hiveserver2-site', 'webhcat-site', 'webhcat-env', 'beeline-log4j2', 'hive-atlas-application.properties', 'hive-exec-log4j', 'hive-exec-log4j2', 'hive-interactive-env', 'hive-interactive-site', 'hive-log4j', 'hive-log4j2', 'hive-logsearch-conf', 'hiveserver2-interactive-site', 'llap-cli-log4j2', 'llap-daemon-log4j', 'parquet-logging', 'tez-interactive-site', 'webhcat-log4j']
     components:
