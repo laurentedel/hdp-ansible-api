@@ -15,7 +15,7 @@
   "yarn.client.nodemanager-connect.retry-interval-ms" : "10000",
 {% if cluster_services.YARN.SSL is defined and cluster_services.YARN.SSL %}
   "yarn.http.policy" : "HTTPS_ONLY",
-  "yarn.log.server.url" : "https://{{ groups['HISTORYSERVER'][0] }}:19888/jobhistory/logs",
+  "yarn.log.server.url" : "https://{{ groups['HISTORYSERVER'][0] }}:19889/jobhistory/logs",
   {% else %}
   "yarn.http.policy" : "HTTP_ONLY",
   "yarn.log.server.url" : "http://{{ groups['HISTORYSERVER'][0] }}:19888/jobhistory/logs",
@@ -83,8 +83,10 @@
   {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][1] }}",{% endif %}
   {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}",{% endif %}
   {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.hostname.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.https.address.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",{% endif %}
-  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.https.address.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}:8088",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.address.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}:8090",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.address.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}:8090",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.https.address.rm1" : "{{ groups['RESOURCEMANAGER'][0] }}:8090",{% endif %}
+  {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.webapp.https.address.rm2" : "{{ groups['RESOURCEMANAGER'][1] }}:8090",{% endif %}
   {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.ha.automatic-failover.zk-base-path" : "/yarn-leader-election",{% endif %}
   {% if cluster_services.YARN.HA is defined and cluster_services.YARN.HA %}"yarn.resourcemanager.ha.rm-ids" : "rm1,rm2",{% endif %}
   "yarn.resourcemanager.monitor.capacity.preemption.natural_termination_factor" : "1",
@@ -101,7 +103,7 @@
   "yarn.resourcemanager.system-metrics-publisher.enabled" : "true",
   "yarn.resourcemanager.webapp.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",
   "yarn.resourcemanager.webapp.delegation-token-auth-filter.enabled" : "false",
-  "yarn.resourcemanager.webapp.https.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8088",
+  "yarn.resourcemanager.webapp.https.address" : "{{ groups['RESOURCEMANAGER'][0] }}:8090",
   "yarn.resourcemanager.work-preserving-recovery.enabled" : "true",
   "yarn.resourcemanager.work-preserving-recovery.scheduling-wait-ms" : "10000",
   "yarn.resourcemanager.zk-acl" : "world:anyone:rwcda",
