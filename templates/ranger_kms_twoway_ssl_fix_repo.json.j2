@@ -8,7 +8,7 @@
       {% else %}
       "provider": "kms://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",
       {% endif %}
-  		"username": "keyadmin",
+  		"username": "keyadmin"
     },
     "isEnabled": true,
     "name": "{{ cluster_name }}_kms",

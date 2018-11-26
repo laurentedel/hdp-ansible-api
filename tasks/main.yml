@@ -295,7 +295,7 @@
 ######## Ranger Admin and KMS 2-Way SSL Fix ########
 - name: Set common certificate name for KMS repository in Ranger Admin
   uri:
-    url: "{% if cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY %}https://{{ groups['RANGER_ADMIN'][0] }}:6182{% else %}http://{{ groups['RANGER_ADMIN'][0] }}:6080{% endif %}/service/public/v2/api/service/name/{{ cluster_name }}_kms"
+    url: "https://{{ groups['RANGER_ADMIN'][0] }}:6182/service/public/v2/api/service/name/{{ cluster_name }}_kms"
     method: PUT
     force_basic_auth: yes
     user: "admin"
