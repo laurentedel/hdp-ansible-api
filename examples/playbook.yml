@@ -68,6 +68,9 @@
           SLIDER:
           ZOOKEEPER:
           HIVE:
+          HBASE:
+            HA: True
+            SSL: True
           RANGER:
             PLUGIN:
               HDFS: True

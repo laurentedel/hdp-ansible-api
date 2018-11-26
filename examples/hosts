@@ -115,3 +115,15 @@ master1
 
 [RANGER_TAGSYNC]
 master1
+
+[HBASE_MASTER]
+master1
+master2
+
+[HBASE_REGIONSERVER]
+worker1
+worker2
+worker3
+
+[HBASE_CLIENT]
+master1
