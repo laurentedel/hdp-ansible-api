@@ -19,6 +19,7 @@
         "spark.scheduler.allocation.file" : "{{spark_conf}}/spark-thrift-fairscheduler.xml",
         "spark.scheduler.mode" : "FAIR",
         "spark.shuffle.service.enabled" : "true",
+				"spark.yarn.stagingDir" : "/tmp/spark/staging",
         "spark.yarn.executor.failuresValidityInterval" : "2h",
         "spark.yarn.maxAppAttempts" : "1",
         "spark.yarn.queue" : "default"
