@@ -9,70 +9,42 @@ services:
       noha: ['NAMENODE', 'SECONDARY_NAMENODE', 'DATANODE']
       ha: ['NAMENODE', 'ZKFC', 'DATANODE', 'JOURNALNODE']
       client: ['HDFS_CLIENT']
-    custom:
-      noha: ['first_namenode', 'second_namenode', 'zookeeper_quorum', 'hdp_datanode_dir', 'hdp_namenode_dir', 'hdp_checkpoint_dir']
-      ha: ['']
-      ssl: ['']
   - name: YARN
     conf: ['yarn-site', 'yarn-env', 'capacity-scheduler', 'ssl-client', 'ssl-server']
     components:
       noha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
       ha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
       client: ['YARN_CLIENT']
-    custom:
-      noha: ['zookeeper_quorum', 'hdp_yarn_local_dir', 'hdp_yarn_log_dir']
-      ha: ['']
-      ssl: ['']
   - name: MAPREDUCE2
     conf: ['mapred-site', 'mapred-env', 'mapred-queue-acls', 'ssl-client', 'ssl-server']
     components:
       noha: ['HISTORYSERVER']
       ha: ['']
       client: ['MAPREDUCE2_CLIENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: TEZ
     conf: ['tez-env', 'tez-site']
     components:
       noha: ['']
       ha: ['']
       client: ['TEZ_CLIENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: PIG
     conf: ['pig-properties', 'pig-env', 'pig-log4j']
     components:
       noha: ['']
       ha: ['']
       client: ['PIG']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: SLIDER
     conf: ['slider-env', 'slider-log4j']
     components:
       noha: ['']
       ha: ['']
       client: ['SLIDER']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: ZOOKEEPER
     conf: ['zoo.cfg', 'zookeeper-env']
     components:
       noha: ['ZOOKEEPER_SERVER']
       ha: ['']
       client: ['ZOOKEEPER_CLIENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: HBASE
     conf: ['hbase-site', 'hbase-env', 'hbase-policy', 'hbase-log4j', 'hbase-logsearch-conf']
     components:
@@ -85,90 +57,54 @@ services:
       noha: ['HIVE_SERVER', 'HIVE_METASTORE', 'WEBHCAT_SERVER']
       ha: ['HIVE_SERVER', 'HIVE_METASTORE', 'WEBHCAT_SERVER']
       client: ['HIVE_CLIENT', 'HCAT']
-    custom:
-      noha: ['database_type', 'database_server', 'database_hive_user', 'database_hive_user_password']
-      ha: ['']
-      ssl: ['']
   - name: RANGER
     conf: ['ranger-admin-site', 'ranger-env', 'admin-properties', 'admin-log4j', 'ranger-ugsync-site', 'usersync-properties', 'usersync-log4j']
     components:
       noha: ['RANGER_ADMIN', 'RANGER_USERSYNC']
       ha: ['']
       client: ['']
-    custom:
-      noha: ['database_type', 'database_server', 'database_ranger_user', 'database_ranger_user_password']
-      ha: ['']
-      ssl: ['']
   - name: AMBARI_METRICS
     conf: ['ams-hbase-env', 'ams-logsearch-conf', 'ams-ssl-server', 'ams-hbase-security-site', 'ams-log4j', 'ams-hbase-site', 'ams-env', 'ams-site', 'ams-hbase-policy', 'ams-grafana-env', 'ams-hbase-log4j', 'ams-ssl-client', 'ams-grafana-ini']
     components:
       noha: ['METRICS_MONITOR', 'METRICS_GRAFANA', 'METRICS_COLLECTOR']
       ha: ['METRICS_MONITOR', 'METRICS_GRAFANA', 'METRICS_COLLECTOR']
       client: ['']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: AMBARI_INFRA
     conf: ['infra-solr-log4j', 'infra-solr-xml', 'infra-solr-security-json', 'infra-solr-client-log4j', 'infra-logsearch-conf', 'infra-solr-env']
     components:
       noha: ['INFRA_SOLR']
       ha: ['INFRA_SOLR']
       client: ['INFRA_SOLR_CLIENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: KAFKA
     conf: ['kafka-broker', 'kafka-env', 'kafka-log4j', 'kafka-logsearch-conf', 'kafka_client_jaas_conf', 'kafka_jaas_conf']
     components:
       noha: ['KAFKA_BROKER']
       ha: ['KAFKA_BROKER']
       client: ['']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: SPARK2
     conf: ['livy2-conf', 'livy2-env', 'livy2-log4j-properties', 'livy2-spark-blacklist', 'spark2-defaults', 'spark2-env', 'spark2-hive-site-override', 'spark2-log4j-properties', 'spark2-logsearch-conf', 'spark2-metrics-properties', 'spark2-thrift-fairscheduler', 'spark2-thrift-sparkconf']
     components:
       noha: ['LIVY2_SERVER', 'SPARK2_JOBHISTORYSERVER', 'SPARK2_THRIFTSERVER']
       ha: ['LIVY2_SERVER', 'SPARK2_JOBHISTORYSERVER', 'SPARK2_THRIFTSERVER']
       client: ['SPARK2_CLIENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: OOZIE
     conf: ['oozie-env', 'oozie-log4j', 'oozie-logsearch-conf', 'oozie-site']
     components:
       noha: ['OOZIE_SERVER']
       ha: ['OOZIE_SERVER']
       client: ['OOZIE_CLIENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: SMARTSENSE
     conf: ['activity-conf', 'activity-env', 'activity-log4j', 'activity-zeppelin-env', 'activity-zeppelin-interpreter', 'activity-zeppelin-shiro', 'activity-zeppelin-site', 'anonymization-rules', 'hst-agent-conf', 'hst-log4j', 'hst-server-conf', 'product-info']
     components:
       noha: ['ACTIVITY_ANALYZER', 'ACTIVITY_EXPLORER', 'HST_SERVER']
       ha: ['ACTIVITY_ANALYZER', 'ACTIVITY_EXPLORER', 'HST_SERVER']
       client: ['HST_AGENT']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: SQOOP
     conf: ['sqoop-atlas-application.properties', 'sqoop-env', 'sqoop-site']
     components:
       noha: ['SQOOP']
       ha: ['SQOOP']
       client: ['']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
   - name: KNOX
     conf: ['topology','admin-topology','gateway-log4j','gateway-site', 'knox-env','knox-logsearch-conf','knoxsso-topology', 'ldap-log4j', 'users-ldif']
     components:
@@ -181,7 +117,3 @@ services:
       noha: ['RANGER_KMS_SERVER']
       ha: ['RANGER_KMS_SERVER']
       client: ['']
-    custom:
-      noha: ['']
-      ha: ['']
-      ssl: ['']
