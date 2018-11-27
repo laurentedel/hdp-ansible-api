@@ -136,8 +136,15 @@
         "hive.server2.thrift.max.worker.threads" : "500",
         "hive.server2.thrift.port" : "10000",
         "hive.server2.thrift.sasl.qop" : "auth",
-        "hive.server2.transport.mode" : "binary",
-        "hive.server2.use.SSL" : "false",
+				{% if cluster_services.HIVE.SSL is defined %}
+				"hive.server2.use.SSL" : "true",
+				"hive.server2.keystore.path": "{{ssl_keystore_path}}",
+				"hive.server2.keystore.password": "{{ssl_keystore_password}}",
+				"hive.server2.transport.mode" : "http",
+				{% else %}
+				"hive.server2.use.SSL" : "false",
+				"hive.server2.transport.mode" : "binary",
+				{% endif %}
         "hive.server2.zookeeper.namespace" : "hiveserver2",
         "hive.smbjoin.cache.rows" : "10000",
         "hive.stats.autogather" : "true",
