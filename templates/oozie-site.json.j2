@@ -7,7 +7,12 @@
         "oozie.action.retry.interval" : "30",
         "oozie.authentication.simple.anonymous.allowed" : "true",
         "oozie.authentication.type" : "simple",{% endraw %}
-        "oozie.base.url" : "http://{{ groups['OOZIE_SERVER'][0] }}:11000/oozie",{% raw %}
+				{% if cluster_services.OOZIE.SSL is defined %}
+				"oozie.base.url" : "https://{{ groups['OOZIE_SERVER'][0] }}:11443/oozie",
+				{% else %}
+				"oozie.base.url" : "http://{{ groups['OOZIE_SERVER'][0] }}:11000/oozie",
+				{% endif %}
+				{% raw %}
         "oozie.credentials.credentialclasses" : "hcat=org.apache.oozie.action.hadoop.HCatCredentials,hive2=org.apache.oozie.action.hadoop.Hive2Credentials",
         "oozie.db.schema.name" : "oozie",
         "oozie.service.AuthorizationService.security.enabled" : "true",
