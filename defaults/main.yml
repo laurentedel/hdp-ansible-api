@@ -117,3 +117,9 @@ services:
       noha: ['RANGER_KMS_SERVER']
       ha: ['RANGER_KMS_SERVER']
       client: ['']
+  - name: ZEPPELIN
+    conf: ['zeppelin-config','zeppelin-env','zeppelin-logsearch-conf','zeppelin-shiro-ini', 'zeppelin-log4j-properties']
+    components:
+      noha: ['ZEPPELIN_MASTER']
+      ha: ['ZEPPELIN_MASTER']
+      client: ['']

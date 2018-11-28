@@ -131,3 +131,6 @@ master1
 [KNOX_GATEWAY]
 master1
 master2
+
+[ZEPPELIN_MASTER]
+master3

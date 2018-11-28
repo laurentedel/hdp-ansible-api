@@ -87,4 +87,6 @@
           SMARTSENSE:
           KNOX:
             SSL: True
+          ZEPPELIN:
+            SSL: True
           
