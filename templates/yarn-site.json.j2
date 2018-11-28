@@ -16,13 +16,16 @@
 {% if cluster_services.YARN.SSL is defined and cluster_services.YARN.SSL %}
   "yarn.http.policy" : "HTTPS_ONLY",
   "yarn.log.server.url" : "https://{{ groups['HISTORYSERVER'][0] }}:19889/jobhistory/logs",
+  "yarn.log.server.web-service.url" : "https://{{ groups['APP_TIMELINE_SERVER'][0] }}:8188/ws/v1/applicationhistory",
+  "yarn.nodemanager.webapp.https.address" : "0.0.0.0:8044",
   {% else %}
   "yarn.http.policy" : "HTTP_ONLY",
   "yarn.log.server.url" : "http://{{ groups['HISTORYSERVER'][0] }}:19888/jobhistory/logs",
+  "yarn.log.server.web-service.url" : "http://{{ groups['APP_TIMELINE_SERVER'][0] }}:8188/ws/v1/applicationhistory",
   {% endif %}
+  "yarn.nodemanager.webapp.address" : "0.0.0.0:8042",
   "yarn.log-aggregation-enable" : "true",
   "yarn.log-aggregation.retain-seconds" : "2592000",
-  "yarn.log.server.web-service.url" : "http://{{ groups['APP_TIMELINE_SERVER'][0] }}:8188/ws/v1/applicationhistory",
   "yarn.node-labels.enabled" : "false",{% raw %}
   "yarn.node-labels.fs-store.retry-policy-spec" : "2000, 500",
   "yarn.node-labels.fs-store.root-dir" : "/system/yarn/node-labels",
@@ -111,7 +114,7 @@
   "yarn.resourcemanager.zk-num-retries" : "1000",
   "yarn.resourcemanager.zk-retry-interval-ms" : "1000",
   "yarn.resourcemanager.zk-state-store.parent-path" : "/rmstore",
-  "yarn.resourcemanager.zk-timeout-ms" : "10000",
+  "yarn.resourcemanager.zk-timeout-ms" : "10000",  
   "yarn.scheduler.capacity.ordering-policy.priority-utilization.underutilized-preemption.enabled" : "false",
   "yarn.scheduler.maximum-allocation-mb" : "4096",
   "yarn.scheduler.maximum-allocation-vcores" : "1",
