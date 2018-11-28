@@ -127,3 +127,7 @@ worker3
 
 [HBASE_CLIENT]
 master1
+
+[KNOX_GATEWAY]
+master1
+master2
