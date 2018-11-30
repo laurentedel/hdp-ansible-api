@@ -2,6 +2,7 @@ wait: true
 wait_timeout: 3600
 base_cluster:
   conf: ['cluster-env', 'global', 'hadoop-env']
+sattelite_repo: false
 services:
   - name: HDFS
     conf: ['core-site', 'hdfs-site', 'hdfs-log4j', 'ssl-client', 'ssl-server']
