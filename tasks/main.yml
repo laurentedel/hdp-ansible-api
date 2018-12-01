@@ -239,6 +239,28 @@
     - "{{ cluster_hosts }}"
   failed_when: register_hosts.status not in [409, 200, 201, 202]
 
+- name: Load rack Awareness
+  uri:
+    url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}/hosts/{{in_item.1}}"
+    method: PUT
+    force_basic_auth: yes
+    user: "{{ ambari_username }}"
+    password: "{{ ambari_password }}"
+    headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
+    body: '{"Hosts": { "rack_info" : "{{in_item.0.name}}"{% raw %}}{% endraw %}}'
+    body_format: json
+    validate_certs: no
+    status_code: 200,201,202
+    return_content: yes
+  register: rack_awareness
+  with_subelements:
+    - "{{ rack_awareness }}"
+    - hosts
+  loop_control:
+    label: "{{ in_item.1 }}"
+    loop_var: in_item
+  when: rack_awareness is defined
+
 - include: register_components.yml hosts={{ item }}
   with_items: "{{ cluster_hosts }}"
 
