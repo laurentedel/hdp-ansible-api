@@ -333,6 +333,10 @@
   delegate_to: "{{ groups['RANGER_ADMIN'][0] }}"
 ####################################################
 
+############# Enable Kerberos on The Cluster ###################################
+- include: enable_kerberos.yml
+  when: cluster_services.KERBEROS is defined and cluster_services.KERBEROS
+
 - name: Start all services
   uri:
     url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/clusters/{{ cluster_name }}/services?ServiceInfo/state=INSTALLED"
