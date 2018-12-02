@@ -13,7 +13,7 @@
 
 # Keberize
 - include: enable_kerberos.yml
-  when: cluster_services.KERBEROS is defined and cluster_services.KERBEROS
+  when: cluster_services.KERBEROS is defined
 
 # Actions before starting
 - include: pre_start.yml
