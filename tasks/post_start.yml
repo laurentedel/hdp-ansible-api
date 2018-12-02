@@ -1,0 +1,17 @@
+---
+######## Ranger Admin and KMS 2-Way SSL Fix ########
+- name: Set common certificate name for KMS repository in Ranger Admin
+  uri:
+    url: "https://{{ groups['RANGER_ADMIN'][0] }}:6182/service/public/v2/api/service/name/{{ cluster_name }}_kms"
+    method: PUT
+    force_basic_auth: yes
+    user: "admin"
+    password: "{{ ranger_admin_password }}"
+    headers: '{"Content-Type": "application/json"}'
+    body: "{{ lookup('template','templates/ranger_kms_twoway_ssl_fix_repo.json.j2') }}"
+    body_format: json
+    validate_certs: no
+    status_code: 200,201,202
+    return_content: yes
+  when: cluster_services.RANGER is defined and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is defined and cluster_services.RANGER.TWOWAY
+####################################################
