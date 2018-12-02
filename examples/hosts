@@ -6,6 +6,7 @@ worker1
 worker2
 worker3
 
+########## HDFS ################
 [NAMENODE]
 master1
 master2
@@ -28,7 +29,9 @@ worker3
 master1
 master2
 worker1
+################################
 
+########## YARN ################
 [RESOURCEMANAGER]
 master1
 master2
@@ -53,23 +56,31 @@ master2
 worker1
 worker2
 worker3
+###############################
 
+########## TEZ ################
 [TEZ_CLIENT]
 worker1
 worker2
 worker3
 admin1
+###############################
 
+########## PIG ################
 [PIG]
 worker1
 worker2
 worker3
+###############################
 
+########## SLIDER #############
 [SLIDER]
 worker1
 worker2
 worker3
+###############################
 
+########## ZOOKEEPER ##########
 [ZOOKEEPER_SERVER]
 master1
 master2
@@ -83,7 +94,9 @@ master2
 worker1
 worker2
 worker3
+###############################
 
+########## HIVE ###############
 [HIVE_CLIENT]
 master1
 worker1
@@ -106,7 +119,9 @@ master1
 [WEBHCAT_SERVER]
 master1
 master2
+###############################
 
+########## RANGER #############
 [RANGER_ADMIN]
 master1
 
@@ -115,7 +130,9 @@ master1
 
 [RANGER_TAGSYNC]
 master1
+###############################
 
+########## HBASE ##############
 [HBASE_MASTER]
 master1
 master2
@@ -127,10 +144,15 @@ worker3
 
 [HBASE_CLIENT]
 master1
+###############################
 
+########## KNOX ###############
 [KNOX_GATEWAY]
 master1
 master2
+###############################
 
+########## ZEPPELIN ###########
 [ZEPPELIN_MASTER]
 master3
+###############################
