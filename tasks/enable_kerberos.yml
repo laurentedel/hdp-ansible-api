@@ -10,7 +10,7 @@
     force_basic_auth: yes
     user: "admin"
     password: "admin"
-    headers: '{"X-Requested-By":"ambari"}'
+    headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
     validate_certs: no
     return_content: yes
     status_code: 200,201,202,404
@@ -24,7 +24,7 @@
    force_basic_auth: yes
    user: "admin"
    password: "admin"
-   headers: '{"X-Requested-By":"ambari"}'
+   headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
    validate_certs: no
    return_content: yes
    status_code: 200,201,202,404,409
@@ -38,7 +38,7 @@
     force_basic_auth: yes
     user: "admin"
     password: "admin"
-    headers: '{"X-Requested-By":"ambari"}'
+    headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
     validate_certs: no
     status_code: 200,201,202,404
     return_content: yes
@@ -51,7 +51,7 @@
    force_basic_auth: yes
    user: "admin"
    password: "admin"
-   headers: '{"X-Requested-By":"ambari"}'
+   headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
    validate_certs: no
    status_code: 200,201,202,404
    return_content: yes
@@ -70,7 +70,7 @@
    force_basic_auth: yes
    user: "admin"
    password: "admin"
-   headers: '{"X-Requested-By":"ambari"}'
+   headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
    body: "{{ lookup('template','templates/kerberos/krb5-conf.json.j2') }}"
    body_format: json
    validate_certs: no
@@ -90,7 +90,7 @@
    force_basic_auth: yes
    user: "admin"
    password: "admin"
-   headers: '{"X-Requested-By":"ambari"}'
+   headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
    body: "{{ lookup('template','templates/kerberos/deploy_krb_client.json.j2') }}"
    body_format: json
    validate_certs: no
@@ -124,7 +124,7 @@
    force_basic_auth: yes
    user: "admin"
    password: "admin"
-   headers: '{"X-Requested-By":"ambari"}'
+   headers: '{"X-Requested-By":"ambari", "Content-Type": "application/x-www-form-urlencoded"}'
    body: "{{ lookup('template','templates/kerberos/krb_enable.json.j2') }}"
    body_format: json
    validate_certs: no
