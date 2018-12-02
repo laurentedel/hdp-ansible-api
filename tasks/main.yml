@@ -1,6 +1,6 @@
 ---
 # Check variables/layout
-- include: check_variables.yml
+# - include: check_variables.yml
 
 # Create base cluster
 - include: create_base_cluster.yml
