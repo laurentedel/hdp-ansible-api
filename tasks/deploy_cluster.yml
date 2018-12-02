@@ -104,7 +104,6 @@
   failed_when: register_components_clients.status not in [409, 200, 201, 202]
   ignore_errors: True
 
-- name: Register hosts
 - name: Register hosts to ambari
   uri:
     url: "{{ ambari_server_protocol }}://{{ ambari_server_hostname }}:{{ ambari_server_port }}/api/v1/hosts/{{ item }}"
