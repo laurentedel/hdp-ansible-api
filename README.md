@@ -12,7 +12,7 @@ It uses Ambari's REST API to populate the database and install HDP Stack.
   *  2.6.2.0
   *  2.6.1.5
   *  2.6.1.0
-  
+
 
 - HDP Stacks
 
@@ -62,11 +62,11 @@ admin1.habibiz
 
 Bare metal :
 
-`ansible-playbook -i hosts deploy.yml -u root -k myRootPassword`
+`ansible-playbook -i hosts playbook.yml -u root -k myRootPassword`
 
 Vagrant :
 
-`ansible-playbook -i hosts deploy.yml -u vagrant -s`
+`ansible-playbook -i hosts playbook.yml -u vagrant -s`
 
 ## Requirements
 
