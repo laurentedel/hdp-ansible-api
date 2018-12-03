@@ -156,3 +156,13 @@ master2
 [ZEPPELIN_MASTER]
 master3
 ###############################
+
+########## OOZIE ###########
+[OOZIE_MASTER]
+master1
+
+[OOZIE_CLIENT]
+worker1
+worker2
+worker3
+###############################
