@@ -4,6 +4,13 @@
 			"type": "hdfs-site",
 			"tag": "{{ range(00000000, 99999999) | random }}",
 			"properties": {
+				{% if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL%}
+				"hadoop.security.key.provider.path": "kms://https@{{ groups['RANGER_KMS_SERVER'][0] }}:9393/kms",
+				{% else if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and not cluster_services.RANGER_KMS.SSL %}
+				"hadoop.security.key.provider.path": "kms://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",
+				{% else %}
+				"hadoop.security.key.provider.path": "",
+				{% endif %}
 				"dfs.block.access.token.enable": "true",
 				"dfs.blockreport.initialDelay": "120",
 				"dfs.blocksize": "134217728",
