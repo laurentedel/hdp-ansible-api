@@ -15,17 +15,17 @@
 				"hadoop.proxyuser.httpfs.hosts": "*",
 				"hadoop.proxyuser.hue.groups": "*",
 				"hadoop.proxyuser.hue.hosts": "*",
-				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN.HIVE is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HIVE %}"hadoop.proxyuser.hive.hosts": "{% for hiveserver in groups['HIVE_SERVER'] %}{{ hiveserver }}{% if not loop.last %},{% endif %}{% endfor %}",{% endif %}
+				{% if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN.HIVE is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HIVE %}"hadoop.proxyuser.hive.hosts": "{% for hiveserver in groups['HIVE_SERVER'] %}{{ hiveserver }}{% if not loop.last %},{% endif %}{% endfor %}",{% endif %}
 				"hadoop.security.auth_to_local": "DEFAULT",
 				"hadoop.security.authentication": "simple",
 				"hadoop.security.authorization": "false",
-				{% if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL%}
+				{% if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL %}
 				"hadoop.security.key.provider.path": "kms://https@{{ groups['RANGER_KMS_SERVER'][0] }}:9393/kms",
-				{% else if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and not cluster_services.RANGER_KMS.SSL %}
+				{% elif cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and not cluster_services.RANGER_KMS.SSL %}
 				"hadoop.security.key.provider.path": "kms://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",
 				{% else %}
 				"hadoop.security.key.provider.path": "",
-					{% endif %}
+				{% endif %}
 				"io.compression.codecs": "org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.SnappyCodec",
 				"io.file.buffer.size": "131072",
 				"io.serializations": "org.apache.hadoop.io.serializer.WritableSerialization",
