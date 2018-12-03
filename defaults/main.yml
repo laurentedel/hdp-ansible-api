@@ -111,6 +111,12 @@ services:
       ha: ['OOZIE_SERVER']
       client: ['OOZIE_CLIENT']
     smoketest: ['OOZIE_SERVICE_CHECK']
+  - name: ATLAS
+    conf: ['application-properties', 'atlas-env', 'atlas-logsearch-conf', 'atlas-solrconfig', 'atlas-log4j']
+    components:
+      noha: ['ATLAS_SERVER']
+      ha: ['']
+      client: ['']
   - name: SMARTSENSE
     conf: ['activity-conf', 'activity-env', 'activity-log4j', 'activity-zeppelin-env', 'activity-zeppelin-interpreter', 'activity-zeppelin-shiro', 'activity-zeppelin-site', 'anonymization-rules', 'hst-agent-conf', 'hst-log4j', 'hst-server-conf', 'product-info']
     components:
