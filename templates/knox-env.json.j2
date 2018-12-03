@@ -3,8 +3,9 @@
 		"desired_configs": {
 			"type": "knox-env",
 			"tag": "{{ range(00000000, 99999999) | random }}",
-			"properties": {
+			"properties": {	{% raw %}
 				"knox_master_secret": "{{knox_master_password}}",
+					{% endraw %}
 				"knox_user" : "knox",
 				"knox_group" : "knox",
 				"knox_keytab_path" : "/etc/security/keytabs/knox.service.keytab",
