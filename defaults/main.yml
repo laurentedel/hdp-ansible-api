@@ -6,21 +6,21 @@ vdf_source: roles/ambari-cluster/templates/repo.xml.j2
 sattelite_repo: false
 services:
   - name: HDFS
-    conf: ['core-site', 'hdfs-site', 'hdfs-log4j', 'ssl-client', 'ssl-server']
+    conf: ['core-site', 'hdfs-site', 'hdfs-log4j', 'ssl-client', 'ssl-server', 'hadoop-policy', 'hdfs-logsearch-conf']
     components:
       noha: ['NAMENODE', 'SECONDARY_NAMENODE', 'DATANODE']
       ha: ['NAMENODE', 'ZKFC', 'DATANODE', 'JOURNALNODE']
       client: ['HDFS_CLIENT']
     smoketest: ['HDFS_SERVICE_CHECK']
   - name: YARN
-    conf: ['yarn-site', 'yarn-env', 'capacity-scheduler', 'ssl-client', 'ssl-server']
+    conf: ['yarn-site', 'yarn-env', 'capacity-scheduler', 'ssl-client', 'ssl-server', 'yarn-log4j', 'yarn-logsearch-conf']
     components:
       noha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
       ha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
       client: ['YARN_CLIENT']
     smoketest: YARN_SERVICE_CHECK
   - name: MAPREDUCE2
-    conf: ['mapred-site', 'mapred-env', 'mapred-queue-acls', 'ssl-client', 'ssl-server']
+    conf: ['mapred-site', 'mapred-env', 'mapred-queue-acls', 'ssl-client', 'ssl-server', 'mapred-logsearch-conf']
     components:
       noha: ['HISTORYSERVER']
       ha: ['']
@@ -48,7 +48,7 @@ services:
       client: ['SLIDER']
     smoketest: ['']
   - name: ZOOKEEPER
-    conf: ['zoo.cfg', 'zookeeper-env']
+    conf: ['zoo.cfg', 'zookeeper-env', 'zookeeper-log4j', 'zookeeper-logsearch-conf']
     components:
       noha: ['ZOOKEEPER_SERVER']
       ha: ['']
