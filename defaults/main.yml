@@ -1,5 +1,6 @@
 wait: true
 wait_timeout: 3600
+capacity_scheduler_file: 'capacity-scheduler'
 base_cluster:
   conf: ['cluster-env', 'global', 'hadoop-env']
 vdf_source: roles/ambari-cluster/templates/repo.xml.j2
@@ -13,7 +14,7 @@ services:
       client: ['HDFS_CLIENT']
     smoketest: ['HDFS_SERVICE_CHECK']
   - name: YARN
-    conf: ['yarn-site', 'yarn-env', 'capacity-scheduler', 'ssl-client', 'ssl-server', 'yarn-log4j', 'yarn-logsearch-conf']
+    conf: ['yarn-site', 'yarn-env', '{{capacity_scheduler_file}}', 'ssl-client', 'ssl-server']
     components:
       noha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
       ha: ['RESOURCEMANAGER', 'NODEMANAGER', 'APP_TIMELINE_SERVER']
