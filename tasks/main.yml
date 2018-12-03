@@ -25,4 +25,5 @@
 - include: post_start.yml
 
 # Smoke test
-#- include: smoke_test.yml
+- include: smoke_test.yml
+  when: cluster_services.SMOKETEST is defined

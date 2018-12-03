@@ -94,3 +94,4 @@
           ZEPPELIN:
             SSL: True
           KERBEROS:
+          SMOKETEST:
