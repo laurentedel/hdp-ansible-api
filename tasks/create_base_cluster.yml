@@ -26,7 +26,7 @@
 
 - name: Copy VDF repository
   template: >
-   src=roles/ambari-cluster/templates/repo.xml.j2
+   src={{vdf_source}}
    dest=/tmp/repo.xml
 
 - name: Load VDF repository

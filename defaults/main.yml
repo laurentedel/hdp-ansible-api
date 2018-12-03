@@ -2,6 +2,7 @@ wait: true
 wait_timeout: 3600
 base_cluster:
   conf: ['cluster-env', 'global', 'hadoop-env']
+vdf_source: roles/ambari-cluster/templates/repo.xml.j2
 sattelite_repo: false
 services:
   - name: HDFS
