@@ -1,6 +1,7 @@
 [MYCLUSTER]
 master1
 master2
+master3
 admin1
 worker1
 worker2
@@ -121,17 +122,6 @@ master1
 master2
 ###############################
 
-########## RANGER #############
-[RANGER_ADMIN]
-master1
-
-[RANGER_USERSYNC]
-master1
-
-[RANGER_TAGSYNC]
-master1
-###############################
-
 ########## HBASE ##############
 [HBASE_MASTER]
 master1
@@ -146,6 +136,95 @@ worker3
 master1
 ###############################
 
+########## RANGER #############
+[RANGER_ADMIN]
+master1
+
+[RANGER_USERSYNC]
+master1
+
+[RANGER_TAGSYNC]
+master1
+###############################
+
+########## RANGER_KMS #############
+[RANGER_KMS_SERVER]
+master1
+###############################
+
+########## AMBARI_INFRA ###########
+[INFRA_SOLR]
+worker1
+worker2
+worker3
+
+[INFRA_SOLR_CLIENT]
+master1
+master2
+worker1
+worker2
+worker3
+###############################
+
+########## AMBARI_METRICS ###########
+[METRICS_MONITOR]
+master1
+master2
+master3
+admin1
+worker1
+worker2
+worker3
+
+[METRICS_GRAFANA]
+master2
+
+[METRICS_COLLECTOR]
+master2
+###############################
+
+########## KAFKA ###############
+[KAFKA_BROKER]
+worker1
+worker2
+worker3
+###############################
+
+########## SPARK2 ###########
+[SPARK2_JOBHISTORYSERVER]
+master3
+
+[LIVY2_SERVER]
+master3
+
+[SPARK2_THRIFTSERVER]
+master3
+
+[SPARK2_CLIENT]
+worker1
+worker2
+worker3
+###############################
+
+########## OOZIE ###########
+[OOZIE_SERVER]
+master3
+###############################
+
+########## SMARTSENSE ###########
+[HST_SERVER]
+master3
+
+[HST_AGENT]
+master1
+master2
+master3
+admin1
+worker1
+worker2
+worker3
+###############################
+
 ########## KNOX ###############
 [KNOX_GATEWAY]
 master1
@@ -154,5 +233,10 @@ master2
 
 ########## ZEPPELIN ###########
 [ZEPPELIN_MASTER]
+master3
+###############################
+
+########## ATLAS ###########
+[ATLAS_SERVER]
 master3
 ###############################
