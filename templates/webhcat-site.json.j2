@@ -23,6 +23,9 @@
   "templeton.storage.class" : "org.apache.hive.hcatalog.templeton.tool.ZooKeeperStorage",
   "templeton.streaming.jar" : "hdfs:///hdp/apps/${hdp.version}/mapreduce/hadoop-streaming.jar",{% endraw %}
   "templeton.zookeeper.hosts" : "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}",
+  {% if cluster_services.HIVE is defined %}
+	"hadoop.proxyuser.http.groups": "*",
+	"hadoop.proxyuser.http.hosts": "{{ groups['WEBHCAT_SERVER'] | join(',') }}",{% endif %}
   "webhcat.proxyuser.hue.groups" : "*",
   "webhcat.proxyuser.hue.hosts" : "*"
 }

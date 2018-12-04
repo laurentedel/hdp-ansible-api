@@ -14,7 +14,9 @@
 				"hadoop.proxyuser.httpfs.groups": "*",
 				"hadoop.proxyuser.httpfs.hosts": "*",
 				"hadoop.proxyuser.hue.groups": "*",
-				"hadoop.proxyuser.hue.hosts": "*",
+				"hadoop.proxyuser.hue.hosts": "*",{% if cluster_services.HIVE is defined %}
+				"hadoop.proxyuser.http.groups": "*",
+				"hadoop.proxyuser.http.hosts": "{{ groups['WEBHCAT_SERVER'] | join(',') }}",{% endif %}
 				{% if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN.HIVE is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HIVE %}"hadoop.proxyuser.hive.hosts": "{% for hiveserver in groups['HIVE_SERVER'] %}{{ hiveserver }}{% if not loop.last %},{% endif %}{% endfor %}",{% endif %}
 				"hadoop.security.auth_to_local": "DEFAULT",
 				"hadoop.security.authentication": "simple",
