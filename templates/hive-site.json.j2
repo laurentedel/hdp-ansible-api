@@ -11,8 +11,10 @@
         "ambari.hive.db.schema.name" : "hive",
 				{% if cluster_services.ATLAS is defined and cluster_services.ATLAS.SSL is defined and cluster_services.HIVE.SSL %}
 				"atlas.rest.address": "https://{{groups['ATLAS_SERVER'][0]}}:21443",
-				{% else %}
+				{% elif cluster_services.ATLAS is defined and cluster_services.ATLAS.SSL is not defined %}
 				"atlas.rest.address": "http://{{groups['ATLAS_SERVER'][0]}}:21000",
+				{% else %}
+				"atlas.rest.address": "http://localhost:21000",
 				{% endif %}
         "atlas.hook.hive.maxThreads" : "1",
         "atlas.hook.hive.minThreads" : "1",
