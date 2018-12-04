@@ -30,41 +30,36 @@ Check the folder examples
 
 Each services in "cluster_services" needs specific groups in your hosts file.
 
-Exemple:
+Example:
 
 ```
-
 [NAMENODE]
-
 master1.habibiz
-
 master1.habibiz
-
-
 
 [DATANODE]
-
 worker1.habibiz
-
 worker2.habibiz
-
 worker3.habibiz
 
-
-
 [RANGER_ADMIN]
-
 admin1.habibiz
-
 ```
+
 
 ## Run
 
-Bare metal :
+Bare metal:
 
-`ansible-playbook -i hosts playbook.yml -u root -k myRootPassword`
+```
+mkdir -p test/roles && cd test/roles
+git clone https://github.com/yyounes75/hdp-ansible-api.git ambari-cluster
+cp ambari-cluster/examples/playbook.yml ambari-cluster/examples/hosts ../
+cd ..
+ansible-playbook -i hosts playbook.yml -e "ansible_user=root ansible_ssh_pass=myRootPassword"
+```
 
-Vagrant :
+Vagrant:
 
 `ansible-playbook -i hosts playbook.yml -u vagrant -s`
 
@@ -76,6 +71,7 @@ Vagrant :
 - NTPD Installed
 - Network Resolution
 - Certificates with pem format for each of your host and the CA if you want to enable SSL
+- Ambari installed
 
 ## WIP
 [The original repo](https://github.com/yyounes75/hdp-ansible) is being migrated to this one
