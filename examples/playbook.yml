@@ -57,6 +57,7 @@
         kdc_server: master1.habibiz
         kerberos_principal: admin@DEV.HABIBIZ
         kerberos_principal_password: admin123
+        create_users_and_groups: false
         cluster_services:
           HDFS:
             HA: True
