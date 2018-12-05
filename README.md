@@ -30,7 +30,7 @@ Check the folder examples
 
 Each services in "cluster_services" needs specific groups in your hosts file.
 
-Exemple:
+Example:
 
 ```
 
@@ -60,13 +60,13 @@ admin1.habibiz
 
 ## Run
 
-Bare metal :
+Bare metal:
 
 `ansible-playbook -i hosts playbook.yml -u root -k myRootPassword`
 
-Vagrant :
+Vagrant:
 
-`ansible-playbook -i hosts playbook.yml -u vagrant -s`
+`ansible-playbook -i hosts playbook.yml -u vagrant -b`
 
 ## Requirements
 
