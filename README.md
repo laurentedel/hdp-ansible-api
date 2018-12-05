@@ -86,6 +86,7 @@ support.
 
 - List of components by services
 - ~~Auto create system user~~
-- Config groups
+- ~~Config groups~~
 - Refactoring
 - Kerberos role
+- Autogenerate certs with default keystore
