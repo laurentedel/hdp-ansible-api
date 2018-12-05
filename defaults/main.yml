@@ -70,7 +70,7 @@ services:
       client: ['HIVE_CLIENT', 'HCAT']
     smoketest: ['HIVE_SERVICE_CHECK', 'WEBHCAT_SERVICE_CHECK']
   - name: RANGER
-    conf: ['ranger-admin-site', 'ranger-env', 'admin-properties', 'admin-log4j', 'ranger-ugsync-site', 'usersync-properties', 'usersync-log4j']
+    conf: ['ranger-admin-site', 'ranger-env', 'admin-properties', 'admin-log4j', 'ranger-ugsync-site', 'usersync-properties', 'usersync-log4j', 'ranger-solr-configuration']
     components:
       noha: ['RANGER_ADMIN', 'RANGER_USERSYNC']
       ha: ['']
