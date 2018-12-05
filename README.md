@@ -75,7 +75,7 @@ Vagrant:
 - Mysql/MariaDB Database installed for Ambari Server Backend
 - NTPD Installed
 - Network Resolution
-- Certificates with pem format for each of your host and the CA if you want to enable SSL
+- Certificates in keystore/truststore jks if you want to enable SSL
 
 ## WIP
 [The original repo](https://github.com/yyounes75/hdp-ansible) is being migrated to this one
@@ -85,6 +85,7 @@ support.
 ## TODO
 
 - List of components by services
+- ~~Auto create system user~~
 - Config groups
 - Refactoring
 - Kerberos role
