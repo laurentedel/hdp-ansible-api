@@ -1,0 +1,28 @@
+---
+######## Fix failed installation due to TLS version in Ambari-agent ########
+- lineinfile:
+    path: /etc/ambari-agent/conf/ambari-agent.ini
+    # regexp: '\[security\]'
+    insertafter: '\[security\]'
+    line: 'force_https_protocol=PROTOCOL_TLSv1_2'
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ cluster_hosts }}"
+
+- name: Restart service "Ambari Agent"
+  systemd:
+    state: restarted
+    name: ambari-agent
+  delegate_to: "{{ item }}"
+  with_items:
+    - "{{ cluster_hosts }}"
+
+- name: Restart service "Ambari Server"
+  systemd:
+    state: restarted
+    name: ambari-server
+  delegate_to: "{{ ambari_server_hostname }}"
+
+- name: Wait agent to register
+  shell: sleep 60
+####################################################

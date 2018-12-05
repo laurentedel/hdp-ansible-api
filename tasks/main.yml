@@ -2,6 +2,9 @@
 # Check variables/layout
 # - include: check_variables.yml
 
+# Actions beforce installing
+- include: pre_install.yml
+
 # Create base cluster
 - include: create_base_cluster.yml
 
