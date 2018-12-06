@@ -6,14 +6,19 @@
 			"properties": {
 					"xasecure.audit.destination.hdfs.dir" : "hdfs://{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}{{ cluster_name }}{% else %}{{ first_namenode }}:8020{% endif %}/ranger/audit",
 					"xasecure.audit.destination.hdfs" : "true",
-	        "xasecure.audit.destination.solr" : "false",
 	        "admin_password" : "{{ranger_admin_password}}",
 	        "admin_username" : "admin",
 	        "create_db_dbuser" : "false",
 	        "is_external_solrCloud_enabled" : "false",
 	        "is_external_solrCloud_kerberos" : "false",
 	        "is_nested_groupsync_enabled" : "false",
+					{% if cluster_services.AMBARI_INFRA is defined %}
+	        "xasecure.audit.destination.solr" : "true",
+	        "is_solrCloud_enabled" : "true",
+					{% else %}
+	        "xasecure.audit.destination.solr" : "false",
 	        "is_solrCloud_enabled" : "false",
+					{% endif %}
 	        "ranger-atlas-plugin-enabled" : "{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.ATLAS is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.ATLAS %}Yes{% else %}No{% endif %}",
 	        "ranger-hbase-plugin-enabled" : "{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HBASE is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HBASE %}Yes{% else %}No{% endif %}",
 	        "ranger-hdfs-plugin-enabled" : "{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HDFS is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN.HDFS %}Yes{% else %}No{% endif %}",
