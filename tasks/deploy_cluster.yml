@@ -16,6 +16,8 @@
   no_log: False
   with_items:
     - "{{ services }}"
+  loop_control:
+    label: "{{ item.name }}"
   when: item.name in cluster_services
   failed_when: cluster_definition.status not in [409, 200, 201, 202]
 
@@ -60,6 +62,8 @@
   with_subelements:
     - "{{ services }}"
     - components.ha
+  loop_control:
+    label: "{{ item.1 }}"
   when: item.0.name in cluster_services and cluster_services[item.0.name].HA is defined and cluster_services[item.0.name].HA and item.1 != ""
   failed_when: register_components_ha.status not in [409, 200, 201, 202]
 
@@ -80,6 +84,8 @@
   with_subelements:
     - "{{ services }}"
     - components.noha
+  loop_control:
+    label: "{{ item.1 }}"
   when: item.0.name in cluster_services and cluster_services[item.0.name] is defined and cluster_services[item.0.name].HA is not defined and item.1 != ""
   failed_when: register_components_noha.status not in [409, 200, 201, 202]
 
@@ -100,6 +106,8 @@
   with_subelements:
     - "{{ services }}"
     - components.client
+  loop_control:
+    label: "{{ item.1 }}"
   when: item.0.name in cluster_services and cluster_services[item.0.name] is defined and item.1 != ""
   failed_when: register_components_clients.status not in [409, 200, 201, 202]
   ignore_errors: True
@@ -119,6 +127,8 @@
   register: register_node
   with_items:
     - "{{ cluster_hosts }}"
+  loop_control:
+    label: "{{ item }}"
   failed_when: register_node.status not in [409, 200, 201, 202]
 
 - name: Register hosts to cluster
@@ -137,6 +147,8 @@
   register: register_hosts
   with_items:
     - "{{ cluster_hosts }}"
+  loop_control:
+    label: "{{ item }}"
   failed_when: register_hosts.status not in [409, 200, 201, 202]
 
 - name: Load rack Awareness
