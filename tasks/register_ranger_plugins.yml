@@ -10,7 +10,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   when: cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN[in_services]
 
 - name: Load configuration for ranger audit properties
@@ -25,7 +25,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   when: cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN[in_services]
 
 - name: Load configuration for ranger security properties
@@ -40,7 +40,7 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   when: cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN[in_services]
 
 - name: Load configuration for ranger policymgr ssl properties
@@ -55,5 +55,5 @@
     body_format: json
     validate_certs: no
     status_code: 200,201,202
-  return_content: yes
+    return_content: yes
   when: cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN is defined and cluster_services.RANGER.PLUGIN[in_services]

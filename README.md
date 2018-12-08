@@ -30,7 +30,7 @@ Check the folder examples
 
 Each services in "cluster_services" needs specific groups in your hosts file.
 
-Exemple:
+Example:
 
 ```
 
@@ -60,13 +60,13 @@ admin1.habibiz
 
 ## Run
 
-Bare metal :
+Bare metal:
 
 `ansible-playbook -i hosts playbook.yml -u root -k myRootPassword`
 
-Vagrant :
+Vagrant:
 
-`ansible-playbook -i hosts playbook.yml -u vagrant -s`
+`ansible-playbook -i hosts playbook.yml -u vagrant -b`
 
 ## Requirements
 
@@ -75,7 +75,7 @@ Vagrant :
 - Mysql/MariaDB Database installed for Ambari Server Backend
 - NTPD Installed
 - Network Resolution
-- Certificates with pem format for each of your host and the CA if you want to enable SSL
+- Certificates in keystore/truststore jks if you want to enable SSL
 
 ## WIP
 [The original repo](https://github.com/yyounes75/hdp-ansible) is being migrated to this one
@@ -85,6 +85,8 @@ support.
 ## TODO
 
 - List of components by services
-- Config groups
+- ~~Auto create system user~~
+- ~~Config groups~~
 - Refactoring
 - Kerberos role
+- Autogenerate certs with default keystore

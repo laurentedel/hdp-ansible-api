@@ -9,7 +9,11 @@
 				"ranger.jpa.jdbc.url": "jdbc:{{ database_type }}://{{ database_server }}/{{ database_ranger }}?createDatabaseIfNotExist=true",
         "ranger.jpa.jdbc.password" : "{{ database_ranger_user_password }}",
 				"ranger.audit.source.type": "solr",
-				"ranger.audit.solr.zookeepers": "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}",
+				{% if cluster_services.AMBARI_INFRA is defined %}
+				"ranger.audit.solr.zookeepers": "{% for host in zookeeper_quorum %}{{ host }}:2181{% if not loop.last %},{% endif %}{% endfor %}/infra-solr",
+				{% else %}
+        "ranger.audit.solr.zookeepers" : "NONE",
+				{% endif %}
 				{% if cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL and cluster_services.RANGER.TWOWAY is not defined %}
 				"ranger.service.http.enabled" : "false",
         "ranger.truststore.alias" : "{{ ranger_truststore_alias }}",
@@ -60,7 +64,6 @@
         "ranger.audit.solr.password" : "",
         "ranger.audit.solr.urls" : "",
         "ranger.audit.solr.username" : "ranger_solr",
-        "ranger.audit.solr.zookeepers" : "NONE",
         "ranger.audit.source.type" : "solr",
         "ranger.authentication.method" : "UNIX",
         "ranger.credential.provider.path" : "/etc/ranger/admin/rangeradmin.jceks",

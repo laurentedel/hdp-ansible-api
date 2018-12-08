@@ -9,6 +9,13 @@
 	      "javax.jdo.option.ConnectionUserName": "{{ database_hive_user }}",
 	      "javax.jdo.option.ConnectionPassword": "{{ database_hive_user_password }}",
         "ambari.hive.db.schema.name" : "hive",
+				{% if cluster_services.ATLAS is defined and cluster_services.ATLAS.SSL is defined and cluster_services.HIVE.SSL %}
+				"atlas.rest.address": "https://{{groups['ATLAS_SERVER'][0]}}:21443",
+				{% elif cluster_services.ATLAS is defined and cluster_services.ATLAS.SSL is not defined %}
+				"atlas.rest.address": "http://{{groups['ATLAS_SERVER'][0]}}:21000",
+				{% else %}
+				"atlas.rest.address": "http://localhost:21000",
+				{% endif %}
         "atlas.hook.hive.maxThreads" : "1",
         "atlas.hook.hive.minThreads" : "1",
         "datanucleus.autoCreateSchema" : "false",
@@ -18,7 +25,7 @@
         "fs.hdfs.impl.disable.cache" : "true",
         "hive.auto.convert.join" : "true",
         "hive.auto.convert.join.noconditionaltask" : "true",
-        "hive.auto.convert.join.noconditionaltask.size" : "52428800",
+        "hive.auto.convert.join.noconditionaltask.size" : "286331153",
         "hive.auto.convert.sortmerge.join" : "true",
         "hive.auto.convert.sortmerge.join.to.mapjoin" : "false",
         "hive.cbo.enable" : "true",
@@ -153,7 +160,7 @@
         "hive.stats.fetch.partition.stats" : "true",
         "hive.support.concurrency" : "false",
         "hive.tez.auto.reducer.parallelism" : "false",
-        "hive.tez.container.size" : "4096",
+        "hive.tez.container.size" : "1024",
         "hive.tez.cpu.vcores" : "-1",
         "hive.tez.dynamic.partition.pruning" : "true",
         "hive.tez.dynamic.partition.pruning.max.data.size" : "104857600",

@@ -4,6 +4,13 @@
 			"type": "hdfs-site",
 			"tag": "{{ range(00000000, 99999999) | random }}",
 			"properties": {
+				{% if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL %}
+				"hadoop.security.key.provider.path": "kms://https@{{ groups['RANGER_KMS_SERVER'][0] }}:9393/kms",
+				{% elif cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and not cluster_services.RANGER_KMS.SSL %}
+				"hadoop.security.key.provider.path": "kms://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",
+				{% else %}
+				"hadoop.security.key.provider.path": "",
+				{% endif %}
 				"dfs.block.access.token.enable": "true",
 				"dfs.blockreport.initialDelay": "120",
 				"dfs.blocksize": "134217728",
@@ -28,8 +35,11 @@
 				"dfs.datanode.max.transfer.threads": "4096",
 				"dfs.domain.socket.path": "/var/lib/hadoop-hdfs/dn_socket",
 				"dfs.encrypt.data.transfer.cipher.suites": "AES/CTR/NoPadding",
-				{% if cluster_services.RANGER_KMS is defined %}
-				"dfs.encryption.key.provider.uri": "kms://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",{% else %}"dfs.encryption.key.provider.uri": "",{% endif %}
+				{% if cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and cluster_services.RANGER_KMS.SSL %}
+				"dfs.encryption.key.provider.uri": "kms://https@{{ groups['RANGER_KMS_SERVER'][0] }}:9393/kms",
+				{% elif cluster_services.RANGER_KMS is defined and cluster_services.RANGER_KMS.SSL is defined and not cluster_services.RANGER_KMS.SSL %}
+				"dfs.encryption.key.provider.uri": "kms://http@{{ groups['RANGER_KMS_SERVER'][0] }}:9292/kms",
+				{% else %}"dfs.encryption.key.provider.uri": "",{% endif %}
 				{% if cluster_services.HDFS.HA is defined and cluster_services.HDFS.HA %}"dfs.ha.automatic-failover.enabled": "true",
 	      "dfs.ha.fencing.methods": "shell(/bin/true)",
 	      "dfs.ha.namenodes.{{ cluster_name }}": "nn1,nn2",{% endif %}

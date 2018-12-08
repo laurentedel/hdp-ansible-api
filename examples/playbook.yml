@@ -53,6 +53,11 @@
         ranger_keystore_credential_alias: "master1"
         ranger_keystore_keyalias: "master1"
         hst_agent_version: "1.4.5.2.6.2.2-1"  ## Must match your package version
+        kerberos_realm: DEV.HABIBIZ
+        kdc_server: master1.habibiz
+        kerberos_principal: admin@DEV.HABIBIZ
+        kerberos_principal_password: admin123
+        create_users_and_groups: false
         cluster_services:
           HDFS:
             HA: True
@@ -73,10 +78,14 @@
             HA: True
             SSL: True
           RANGER:
+            SSL: True
+            TWOWAY: True
             PLUGIN:
               HDFS: True
               YARN: True
               HIVE: True
+          RANGER_KMS:
+            SSL: True
           AMBARI_INFRA:
           AMBARI_METRICS:
           KAFKA:
@@ -89,4 +98,6 @@
             SSL: True
           ZEPPELIN:
             SSL: True
-          
+          ATLAS:
+          KERBEROS:
+          SMOKETEST:
