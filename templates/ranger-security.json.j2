@@ -13,6 +13,9 @@
         "ranger.plugin.{{ in_services|lower }}.policy.source.impl" : "org.apache.ranger.admin.client.RangerAdminRESTClient",
 				"ranger.plugin.{{ in_services|lower }}.policy.cache.dir" : {% raw %}"/etc/ranger/{{repo_name}}/policycache",{% endraw %}
         "ranger.plugin.{{ in_services|lower }}.service.name" : {% raw %}"{{repo_name}}",{% endraw %}
+				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "YARN" %}
+				"ranger.add-yarn-authorization" : "false",
+				{% endif %}
 				{%if cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services == "HIVE" %}
 				{% raw %}"ranger.plugin.hive.policy.rest.ssl.config.file" : "/usr/hdp/current/{{ranger_hive_component}}/conf/conf.server/ranger-policymgr-ssl.xml"{% endraw %}
 				{% elif cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] is defined and cluster_services.RANGER is defined and cluster_services.RANGER.PLUGIN[in_services] and in_services in ["HDFS", "YARN"] and cluster_services.RANGER.SSL is defined and cluster_services.RANGER.SSL %}
