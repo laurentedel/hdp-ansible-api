@@ -13,7 +13,7 @@
         "spark.history.kerberos.principal" : "none",{% endraw %}
 				"spark.ssl.enabled" : "true",
 				"spark.history.ui.port" : "8001",
-				"spark.ssl.historyServer.port" : "8443",
+				"spark.ssl.historyServer.port" : "8401", {# need to be "spark.history.ui.port" + 400 #}
 				"spark.ssl.keyPassword" : "{{ ssl_keystore_password }}",
 				"spark.ssl.keyStore" : "{{ ssl_keystore_path }}",
 				"spark.ssl.keyStorePassword" : "{{ ssl_keystore_password }}",
