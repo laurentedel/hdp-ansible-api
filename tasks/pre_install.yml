@@ -8,21 +8,25 @@
   delegate_to: "{{ item }}"
   with_items:
     - "{{ cluster_hosts }}"
+  register: fixambari
 
-- name: Restart service "Ambari Agent"
-  systemd:
-    state: restarted
-    name: ambari-agent
-  delegate_to: "{{ item }}"
-  with_items:
-    - "{{ cluster_hosts }}"
+- name: Restart services
+  block:
+    - name: Restart service "Ambari Agent"
+      systemd:
+        state: restarted
+        name: ambari-agent
+      delegate_to: "{{ item }}"
+      with_items:
+        - "{{ cluster_hosts }}"
 
-- name: Restart service "Ambari Server"
-  systemd:
-    state: restarted
-    name: ambari-server
-  delegate_to: "{{ ambari_server_hostname }}"
+    - name: Restart service "Ambari Server"
+      systemd:
+        state: restarted
+        name: ambari-server
+      delegate_to: "{{ ambari_server_hostname }}"
 
-- name: Wait agent to register
-  shell: sleep 60
+    - name: Wait agent to register
+      shell: sleep 60
+  when: fixambari.changed
 ####################################################
