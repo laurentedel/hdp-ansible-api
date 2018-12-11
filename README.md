@@ -72,7 +72,7 @@ Vagrant:
 
 - Ansible on your deployment machine
 - JDK 1.8 installed on your hosts
-- Mysql/MariaDB Database installed for Ambari Server Backend
+- Mysql/MariaDB or PostgreSQL Database installed for Ambari Server Backend
 - NTPD Installed
 - Network Resolution
 - Certificates in keystore/truststore jks if you want to enable SSL
@@ -88,5 +88,6 @@ support.
 - ~~Auto create system user~~
 - ~~Config groups~~
 - Refactoring
-- Kerberos role
+- ~~Kerberos role~~
+- Auto load correct VDF file
 - Autogenerate certs with default keystore
