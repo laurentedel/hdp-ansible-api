@@ -32,7 +32,7 @@
 				"io.file.buffer.size": "131072",
 				"io.serializations": "org.apache.hadoop.io.serializer.WritableSerialization",
 				{% if cluster_services.HDFS.SSL is defined and cluster_services.HDFS.SSL %}
-				"hadoop.rpc.protection" : "authentication",
+				"hadoop.rpc.protection" : "{{ hadoop_rpc_protection | default('authentication') }}",
 				"hadoop.ssl.require.client.cert" : "false",
 				"hadoop.ssl.hostname.verifier" : "DEFAULT",
 				"hadoop.ssl.keystores.factory.class" : "org.apache.hadoop.security.ssl.FileBasedKeyStoresFactory",
