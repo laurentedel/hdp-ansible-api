@@ -71,7 +71,7 @@ Vagrant:
 - NTPD Installed
 - Network Resolution
 - Certificates with pem format for each of your host and the CA if you want to enable SSL
-- Ambari installed
+- Ambari server and agents installed
 
 ## WIP
 [The original repo](https://github.com/yyounes75/hdp-ansible) is being migrated to this one
