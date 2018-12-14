@@ -1,6 +1,7 @@
 ---
 ######## Fix failed installation due to TLS version in Ambari-agent ########
-- lineinfile:
+- name: Fix TLS version in ambari-agent.ini
+  lineinfile:
     path: /etc/ambari-agent/conf/ambari-agent.ini
     # regexp: '\[security\]'
     insertafter: '\[security\]'
